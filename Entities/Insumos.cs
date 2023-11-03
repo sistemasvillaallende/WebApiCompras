@@ -5,15 +5,18 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace WebApiCompras.Entities
 {
     public class Insumos : DALBase
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
+        public string Cuenta { get; set; }
         public bool Activo { get; set; }
         public string Nota { get; set; }
         public DateTime Fecha { get; set; }
+        public decimal Precio { get; set; }
         public int IdUsuario { get; set; }
         public int IdOficina { get; set; }
         public int IdDireccion { get; set; }
@@ -23,9 +26,11 @@ namespace WebApiCompras.Entities
         {
             Id = 0;
             Nombre = string.Empty;
+            Cuenta = string.Empty;
             Activo = false;
             Nota = string.Empty;
             Fecha = DateTime.Now;
+            Precio = 0;
             IdUsuario = 0;
             IdOficina = 0;
             IdDireccion = 0;
@@ -40,9 +45,11 @@ namespace WebApiCompras.Entities
             {
                 int Id = dr.GetOrdinal("Id");
                 int Nombre = dr.GetOrdinal("Nombre");
+                int Cuenta = dr.GetOrdinal("Cuenta");
                 int Activo = dr.GetOrdinal("Activo");
                 int Nota = dr.GetOrdinal("Nota");
                 int Fecha = dr.GetOrdinal("Fecha");
+                int Precio = dr.GetOrdinal("Precio");
                 int IdUsuario = dr.GetOrdinal("IdUsuario");
                 int IdOficina = dr.GetOrdinal("IdOficina");
                 int IdDireccion = dr.GetOrdinal("IdDireccion");
@@ -52,9 +59,11 @@ namespace WebApiCompras.Entities
                     obj = new Insumos();
                     if (!dr.IsDBNull(Id)) { obj.Id = dr.GetInt32(Id); }
                     if (!dr.IsDBNull(Nombre)) { obj.Nombre = dr.GetString(Nombre); }
+                    if (!dr.IsDBNull(Cuenta)) { obj.Cuenta = dr.GetString(Cuenta); }
                     if (!dr.IsDBNull(Activo)) { obj.Activo = dr.GetBoolean(Activo); }
                     if (!dr.IsDBNull(Nota)) { obj.Nota = dr.GetString(Nota); }
                     if (!dr.IsDBNull(Fecha)) { obj.Fecha = dr.GetDateTime(Fecha); }
+                    if (!dr.IsDBNull(Precio)) { obj.Precio = dr.GetDecimal(Fecha); }
                     if (!dr.IsDBNull(IdUsuario)) { obj.IdUsuario = dr.GetInt32(IdUsuario); }
                     if (!dr.IsDBNull(IdOficina)) { obj.IdOficina = dr.GetInt32(IdOficina); }
                     if (!dr.IsDBNull(IdDireccion)) { obj.IdDireccion = dr.GetInt32(IdDireccion); }
@@ -74,7 +83,7 @@ namespace WebApiCompras.Entities
                 {
                     SqlCommand cmd = con.CreateCommand();
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT *FROM Insumos";
+                    cmd.CommandText = "SELECT * FROM Insumos";
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
@@ -93,7 +102,7 @@ namespace WebApiCompras.Entities
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM Insumos WHERE");
+                sql.AppendLine("SELECT * FROM Insumos WHERE");
                 sql.AppendLine("Id = @Id");
                 Insumos obj = null;
                 using (SqlConnection con = GetConnection())
@@ -123,9 +132,11 @@ namespace WebApiCompras.Entities
                 StringBuilder sql = new StringBuilder();
                 sql.AppendLine("INSERT INTO Insumos(");
                 sql.AppendLine("Nombre");
+                sql.AppendLine(", Cuenta");
                 sql.AppendLine(", Activo");
                 sql.AppendLine(", Nota");
                 sql.AppendLine(", Fecha");
+                sql.AppendLine(", Precio");
                 sql.AppendLine(", IdUsuario");
                 sql.AppendLine(", IdOficina");
                 sql.AppendLine(", IdDireccion");
@@ -134,9 +145,11 @@ namespace WebApiCompras.Entities
                 sql.AppendLine("VALUES");
                 sql.AppendLine("(");
                 sql.AppendLine("@Nombre");
+                sql.AppendLine(", @Cuenta");
                 sql.AppendLine(", @Activo");
                 sql.AppendLine(", @Nota");
                 sql.AppendLine(", @Fecha");
+                sql.AppendLine(", @Precio");
                 sql.AppendLine(", @IdUsuario");
                 sql.AppendLine(", @IdOficina");
                 sql.AppendLine(", @IdDireccion");
@@ -149,9 +162,11 @@ namespace WebApiCompras.Entities
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = sql.ToString();
                     cmd.Parameters.AddWithValue("@Nombre", obj.Nombre);
+                    cmd.Parameters.AddWithValue("@Cuenta", obj.Cuenta);
                     cmd.Parameters.AddWithValue("@Activo", obj.Activo);
                     cmd.Parameters.AddWithValue("@Nota", obj.Nota);
                     cmd.Parameters.AddWithValue("@Fecha", obj.Fecha);
+                    cmd.Parameters.AddWithValue("@Precio", obj.Precio);
                     cmd.Parameters.AddWithValue("@IdUsuario", obj.IdUsuario);
                     cmd.Parameters.AddWithValue("@IdOficina", obj.IdOficina);
                     cmd.Parameters.AddWithValue("@IdDireccion", obj.IdDireccion);
@@ -173,9 +188,11 @@ namespace WebApiCompras.Entities
                 StringBuilder sql = new StringBuilder();
                 sql.AppendLine("UPDATE  Insumos SET");
                 sql.AppendLine("Nombre=@Nombre");
+                sql.AppendLine(", Cuenta=@Cuenta");
                 sql.AppendLine(", Activo=@Activo");
                 sql.AppendLine(", Nota=@Nota");
                 sql.AppendLine(", Fecha=@Fecha");
+                sql.AppendLine(", Precio=@Precio");
                 sql.AppendLine(", IdUsuario=@IdUsuario");
                 sql.AppendLine(", IdOficina=@IdOficina");
                 sql.AppendLine(", IdDireccion=@IdDireccion");
@@ -188,9 +205,11 @@ namespace WebApiCompras.Entities
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = sql.ToString();
                     cmd.Parameters.AddWithValue("@Nombre", obj.Nombre);
+                    cmd.Parameters.AddWithValue("@Cuenta", obj.Cuenta);
                     cmd.Parameters.AddWithValue("@Activo", obj.Activo);
                     cmd.Parameters.AddWithValue("@Nota", obj.Nota);
                     cmd.Parameters.AddWithValue("@Fecha", obj.Fecha);
+                    cmd.Parameters.AddWithValue("@Precio", obj.Fecha);
                     cmd.Parameters.AddWithValue("@IdUsuario", obj.IdUsuario);
                     cmd.Parameters.AddWithValue("@IdOficina", obj.IdOficina);
                     cmd.Parameters.AddWithValue("@IdDireccion", obj.IdDireccion);

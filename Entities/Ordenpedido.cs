@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace WebApiCompras.Entities
 {
     public class Ordenpedido : DALBase
@@ -82,7 +83,7 @@ namespace WebApiCompras.Entities
                 {
                     SqlCommand cmd = con.CreateCommand();
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT *FROM Ordenpedido";
+                    cmd.CommandText = "SELECT * FROM Ordenpedido";
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
@@ -101,7 +102,7 @@ namespace WebApiCompras.Entities
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM Ordenpedido WHERE");
+                sql.AppendLine("SELECT * FROM Ordenpedido WHERE");
                 sql.AppendLine("Id = @Id");
                 Ordenpedido obj = null;
                 using (SqlConnection con = GetConnection())

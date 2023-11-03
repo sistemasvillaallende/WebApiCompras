@@ -5,9 +5,10 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace WebApiCompras.Entities
 {
-    public class Ordencompra : DALBase
+    public class OrdenCompra : DALBase
     {
         public int Id { get; set; }
         public DateTime Fecha { get; set; }
@@ -20,7 +21,7 @@ namespace WebApiCompras.Entities
         public int IdDireccion { get; set; }
         public int IdSecretaria { get; set; }
 
-        public Ordencompra()
+        public OrdenCompra()
         {
             Id = 0;
             Fecha = DateTime.Now;
@@ -34,10 +35,10 @@ namespace WebApiCompras.Entities
             IdSecretaria = 0;
         }
 
-        private static List<Ordencompra> mapeo(SqlDataReader dr)
+        private static List<OrdenCompra> mapeo(SqlDataReader dr)
         {
-            List<Ordencompra> lst = new List<Ordencompra>();
-            Ordencompra obj;
+            List<OrdenCompra> lst = new List<OrdenCompra>();
+            OrdenCompra obj;
             if (dr.HasRows)
             {
                 int Id = dr.GetOrdinal("Id");
@@ -52,7 +53,7 @@ namespace WebApiCompras.Entities
                 int IdSecretaria = dr.GetOrdinal("IdSecretaria");
                 while (dr.Read())
                 {
-                    obj = new Ordencompra();
+                    obj = new OrdenCompra();
                     if (!dr.IsDBNull(Id)) { obj.Id = dr.GetInt32(Id); }
                     if (!dr.IsDBNull(Fecha)) { obj.Fecha = dr.GetDateTime(Fecha); }
                     if (!dr.IsDBNull(Llaves)) { obj.Llaves = dr.GetString(Llaves); }
@@ -69,16 +70,16 @@ namespace WebApiCompras.Entities
             return lst;
         }
 
-        public static List<Ordencompra> read()
+        public static List<OrdenCompra> read()
         {
             try
             {
-                List<Ordencompra> lst = new List<Ordencompra>();
+                List<OrdenCompra> lst = new List<OrdenCompra>();
                 using (SqlConnection con = GetConnection())
                 {
                     SqlCommand cmd = con.CreateCommand();
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT *FROM Ordencompra";
+                    cmd.CommandText = "SELECT * FROM OrdenCompra";
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
@@ -91,15 +92,15 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static Ordencompra getByPk(
+        public static OrdenCompra getByPk(
         int Id)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM Ordencompra WHERE");
+                sql.AppendLine("SELECT * FROM OrdenCompra WHERE");
                 sql.AppendLine("Id = @Id");
-                Ordencompra obj = null;
+                OrdenCompra obj = null;
                 using (SqlConnection con = GetConnection())
                 {
                     SqlCommand cmd = con.CreateCommand();
@@ -108,7 +109,7 @@ namespace WebApiCompras.Entities
                     cmd.Parameters.AddWithValue("@Id", Id);
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
-                    List<Ordencompra> lst = mapeo(dr);
+                    List<OrdenCompra> lst = mapeo(dr);
                     if (lst.Count != 0)
                         obj = lst[0];
                 }
@@ -120,12 +121,12 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static int insert(Ordencompra obj)
+        public static int insert(OrdenCompra obj)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("INSERT INTO Ordencompra(");
+                sql.AppendLine("INSERT INTO OrdenCompra(");
                 sql.AppendLine("Fecha");
                 sql.AppendLine(", Llaves");
                 sql.AppendLine(", Nota");
@@ -173,12 +174,12 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static void update(Ordencompra obj)
+        public static void update(OrdenCompra obj)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("UPDATE  Ordencompra SET");
+                sql.AppendLine("UPDATE  OrdenCompra SET");
                 sql.AppendLine("Fecha=@Fecha");
                 sql.AppendLine(", Llaves=@Llaves");
                 sql.AppendLine(", Nota=@Nota");
@@ -214,12 +215,12 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static void delete(Ordencompra obj)
+        public static void delete(OrdenCompra obj)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("DELETE  Ordencompra ");
+                sql.AppendLine("DELETE  OrdenCompra ");
                 sql.AppendLine("WHERE");
                 sql.AppendLine("Id=@Id");
                 using (SqlConnection con = GetConnection())

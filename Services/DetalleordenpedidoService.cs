@@ -6,59 +6,60 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using WebApiCompras.Entities;
+
 namespace WebApiCompras.Services
 {
     public class DetalleordenpedidoService : IDetalleordenpedidoService
     {
-        public Detalleordenpedido getByPk(int Id)
+        public DetalleOrdenpedido getByPk(int Id)
         {
             try
             {
-                return Detalleordenpedido.getByPk(Id);
+                return DetalleOrdenpedido.getByPk(Id);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public List<Detalleordenpedido> read()
+        public List<DetalleOrdenpedido> read()
         {
             try
             {
-                return Detalleordenpedido.read();
+                return DetalleOrdenpedido.read();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public int insert(Detalleordenpedido obj)
+        public int insert(DetalleOrdenpedido obj)
         {
             try
             {
-                return Detalleordenpedido.insert(obj);
+                return DetalleOrdenpedido.insert(obj);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public void update(Detalleordenpedido obj)
+        public void update(DetalleOrdenpedido obj)
         {
             try
             {
-                Detalleordenpedido.update(obj);
+                DetalleOrdenpedido.update(obj);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public void delete(Detalleordenpedido obj)
+        public void delete(DetalleOrdenpedido obj)
         {
             try
             {
-                Detalleordenpedido.delete(obj);
+                DetalleOrdenpedido.delete(obj);
             }
             catch (Exception ex)
             {

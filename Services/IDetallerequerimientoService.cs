@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApiCompras.Entities;
+
 namespace WebApiCompras.Services
 {
-    public interface IDetallerequerimientoService
+    public interface IDetalleRequerimientoService
     {
-        public List<Detallerequerimiento> read();
-        public Detallerequerimiento getByPk(int Id);
-        public int insert(Detallerequerimiento obj);
-        public void update(Detallerequerimiento obj);
-        public void delete(Detallerequerimiento obj);
+        public List<DetalleRequerimiento> read();
+        public DetalleRequerimiento getByPk(int Id);
+        public int insert(DetalleRequerimiento obj);
+        public void update(DetalleRequerimiento obj);
+        public void delete(DetalleRequerimiento obj);
     }
 }
 

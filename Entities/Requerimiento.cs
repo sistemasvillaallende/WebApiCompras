@@ -5,10 +5,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApiCompras.Entities;
+
 namespace WebApiCompras.Entities
 {
     public class Requerimiento : DALBase
     {
+        #region propiedades
         public int Id { get; set; }
         public DateTime Fecha { get; set; }
         public string Llaves { get; set; }
@@ -19,6 +22,8 @@ namespace WebApiCompras.Entities
         public int IdOficina { get; set; }
         public int IdDireccion { get; set; }
         public int IdSecretaria { get; set; }
+        public List<DetalleRequerimiento> Items { get; set; }
+        #endregion
 
         public Requerimiento()
         {
@@ -32,8 +37,10 @@ namespace WebApiCompras.Entities
             IdOficina = 0;
             IdDireccion = 0;
             IdSecretaria = 0;
+            Items = new List<DetalleRequerimiento>();
         }
 
+        #region metodos
         private static List<Requerimiento> mapeo(SqlDataReader dr)
         {
             List<Requerimiento> lst = new List<Requerimiento>();
@@ -78,7 +85,30 @@ namespace WebApiCompras.Entities
                 {
                     SqlCommand cmd = con.CreateCommand();
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT *FROM Requerimiento";
+                    cmd.CommandText = "SELECT * FROM Requerimiento";
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
+        public static List<Requerimiento> listaGrillas(string estado)
+        {
+            //Funcion en desarrollo
+            try
+            {
+                List<Requerimiento> lst = new List<Requerimiento>();
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "SELECT * FROM Requerimiento INNER JOIN ";
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
@@ -91,13 +121,12 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static Requerimiento getByPk(
-        int Id)
+        public static Requerimiento getByPk(int Id)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM Requerimiento WHERE");
+                sql.AppendLine("SELECT * FROM Requerimiento WHERE");
                 sql.AppendLine("Id = @Id");
                 Requerimiento obj = null;
                 using (SqlConnection con = GetConnection())
@@ -124,6 +153,7 @@ namespace WebApiCompras.Entities
         {
             try
             {
+                #region stringSql
                 StringBuilder sql = new StringBuilder();
                 sql.AppendLine("INSERT INTO Requerimiento(");
                 sql.AppendLine("Fecha");
@@ -149,6 +179,7 @@ namespace WebApiCompras.Entities
                 sql.AppendLine(", @IdSecretaria");
                 sql.AppendLine(")");
                 sql.AppendLine("SELECT SCOPE_IDENTITY()");
+                #endregion
                 using (SqlConnection con = GetConnection())
                 {
                     SqlCommand cmd = con.CreateCommand();
@@ -164,7 +195,12 @@ namespace WebApiCompras.Entities
                     cmd.Parameters.AddWithValue("@IdDireccion", obj.IdDireccion);
                     cmd.Parameters.AddWithValue("@IdSecretaria", obj.IdSecretaria);
                     cmd.Connection.Open();
-                    return Convert.ToInt32(cmd.ExecuteScalar());
+
+                    obj.Id = Convert.ToInt32(cmd.ExecuteScalar());
+                    
+                    DetalleRequerimiento.insertList(obj.Items, obj.Id);
+                    
+                    return obj.Id;
                 }
             }
             catch (Exception ex)
@@ -238,6 +274,110 @@ namespace WebApiCompras.Entities
             }
         }
 
+        public static List<Requerimiento> getByUsuario(int idUsuario)
+        {
+            try
+            {
+                List<Requerimiento> lst = new List<Requerimiento>();
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Requerimiento WHERE");
+                sql.AppendLine("IdUsuario = @IdUsuario");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Requerimiento> getByOficina(int idOficina)
+        {
+            try
+            {
+                List<Requerimiento> lst = new List<Requerimiento>();
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Requerimiento WHERE");
+                sql.AppendLine("IdOficina = @IdOficina");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdOficina", idOficina);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Requerimiento> getByDireccion(int idDireccion)
+        {
+            try
+            {
+                List<Requerimiento> lst = new List<Requerimiento>();
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Requerimiento WHERE");
+                sql.AppendLine("IdDireccion = @IdDireccion");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdDireccion", idDireccion);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Requerimiento> getBySecretaria(int idSecretaria)
+        {
+            try
+            {
+                List<Requerimiento> lst = new List<Requerimiento>();
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Requerimiento WHERE");
+                sql.AppendLine("IdSecretaria = @IdSecretaria");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdSecretaria", idSecretaria);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
     }
 }
 

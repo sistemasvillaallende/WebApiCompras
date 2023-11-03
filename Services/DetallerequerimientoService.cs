@@ -9,57 +9,57 @@ using WebApiCompras.Entities;
 
 namespace WebApiCompras.Services
 {
-    public class DetallerequerimientoService : IDetallerequerimientoService
+    public class DetalleRequerimientoService : IDetalleRequerimientoService
     {
-        public Detallerequerimiento getByPk(int Id)
+        public DetalleRequerimiento getByPk(int Id)
         {
             try
             {
-                return Detallerequerimiento.getByPk(Id);
+                return DetalleRequerimiento.getByPk(Id);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public List<Detallerequerimiento> read()
+        public List<DetalleRequerimiento> read()
         {
             try
             {
-                return Detallerequerimiento.read();
+                return DetalleRequerimiento.read();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public int insert(Detallerequerimiento obj)
+        public int insert(DetalleRequerimiento obj)
         {
             try
             {
-                return Detallerequerimiento.insert(obj);
+                return DetalleRequerimiento.insert(obj);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public void update(Detallerequerimiento obj)
+        public void update(DetalleRequerimiento obj)
         {
             try
             {
-                Detallerequerimiento.update(obj);
+                DetalleRequerimiento.update(obj);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public void delete(Detallerequerimiento obj)
+        public void delete(DetalleRequerimiento obj)
         {
             try
             {
-                Detallerequerimiento.delete(obj);
+                DetalleRequerimiento.delete(obj);
             }
             catch (Exception ex)
             {

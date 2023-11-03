@@ -6,59 +6,60 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using WebApiCompras.Entities;
+
 namespace WebApiCompras.Services
 {
     public class OrdencompraService : IOrdencompraService
     {
-        public Ordencompra getByPk(int Id)
+        public OrdenCompra getByPk(int Id)
         {
             try
             {
-                return Ordencompra.getByPk(Id);
+                return OrdenCompra.getByPk(Id);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public List<Ordencompra> read()
+        public List<OrdenCompra> read()
         {
             try
             {
-                return Ordencompra.read();
+                return OrdenCompra.read();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public int insert(Ordencompra obj)
+        public int insert(OrdenCompra obj)
         {
             try
             {
-                return Ordencompra.insert(obj);
+                return OrdenCompra.insert(obj);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public void update(Ordencompra obj)
+        public void update(OrdenCompra obj)
         {
             try
             {
-                Ordencompra.update(obj);
+                OrdenCompra.update(obj);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public void delete(Ordencompra obj)
+        public void delete(OrdenCompra obj)
         {
             try
             {
-                Ordencompra.delete(obj);
+                OrdenCompra.delete(obj);
             }
             catch (Exception ex)
             {

@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Transactions;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using WebApiCompras.Entities;
+
 namespace WebApiCompras.Services
 {
     public class RequerimientoService : IRequerimientoService
@@ -37,7 +39,14 @@ namespace WebApiCompras.Services
         {
             try
             {
-                return Requerimiento.insert(obj);
+                obj.Estado = "1";
+                obj.Historia = Utils.EstadosJSON.AgregarEstado(1,"Enviado","Estados");
+                using (TransactionScope scope = new TransactionScope())
+                {
+                    Requerimiento.insert(obj);
+                    scope.Complete();
+                }
+                return obj.Id;
             }
             catch (Exception ex)
             {
@@ -60,6 +69,50 @@ namespace WebApiCompras.Services
             try
             {
                 Requerimiento.delete(obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Requerimiento> getByUsuario(int idUsuario)
+        {
+            try
+            {
+                return Requerimiento.getByUsuario(idUsuario);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Requerimiento> getByOficina(int idOficina)
+        {
+            try
+            {
+                return Requerimiento.getByOficina(idOficina);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Requerimiento> getByDireccion(int idDireccion)
+        {
+            try
+            {
+                return Requerimiento.getByDireccion(idDireccion);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Requerimiento> getBySecretaria(int idSecretaria)
+        {
+            try
+            {
+                return Requerimiento.getBySecretaria(idSecretaria);
             }
             catch (Exception ex)
             {

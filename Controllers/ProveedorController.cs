@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using Newtonsoft.Json;
-using WebApiCompras.Services
+using WebApiCompras.Services;
 
 namespace WebApiCompras.Controllers
 {

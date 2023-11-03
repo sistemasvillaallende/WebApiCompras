@@ -1,0 +1,15 @@
+Estados en los Requerimientos:
+---------------------------------------------
+1-Enviado: Se ha realizado el requerimiento.
+2-Controlado: Compras, de ser necesario agrega datos como el precio de los insumos. Compras, si o si ve cada requerimiento y genera el paso al siguiente estado.
+3-ValidacionPresupuesto: Por sistema se obtiene la aprobacion o negativa al requerimiento. El requerimiento en este estado puede volver a generarse el control presupuestario.
+4-ValidacionFinanzas: Usuario de finanzas realiza la validacion del requerimiento. Aqui el estado es de espera, ya que tiene presupuesto, solo debe poder aprobar la disposicion 
+	de fondos para su compra.
+5-Fin: tiene dos valores probables: Ce(Cerrado: pasa a gestion de compras) y Ca(Cancelado: muere requerimiento sin mas procesamiento, en caso de tener validacion presupuestaria, 
+	el responsable de area/sector debe cancelar).
+
+Llaves:
+---------------------------------------------
+1- Llave presupuestaria: El requerimiento despues de actualizado sus precios, es sometido a control presupuestario.
+2- Llave financiera: El requerimiento una vez aprobado presupuestariamente, es sometido a control de financiero. Es decir la existencia de fondos suficientes para atender su pago
+

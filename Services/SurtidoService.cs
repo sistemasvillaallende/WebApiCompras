@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using WebApiCompras.Entities;
+
 namespace WebApiCompras.Services
 {
     public class SurtidoService : ISurtidoService
@@ -27,6 +27,28 @@ namespace WebApiCompras.Services
             try
             {
                 return Surtido.read();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Surtido> getBySector(int IdSector)
+        {
+            try
+            {
+                return Surtido.getByUsuario(IdSector);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Surtido> getByUsuario(int IdUsuario)
+        {
+            try
+            {
+                return Surtido.getByUsuario(IdUsuario);
             }
             catch (Exception ex)
             {

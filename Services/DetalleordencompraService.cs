@@ -5,61 +5,61 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
-
 using WebApiCompras.Entities;
+
 namespace WebApiCompras.Services
 {
     public class DetalleordencompraService : IDetalleordencompraService
     {
-        public Detalleordencompra getByPk(int Id)
+        public DetalleOrdenCompra getByPk(int Id)
         {
             try
             {
-                return Detalleordencompra.getByPk(Id);
+                return DetalleOrdenCompra.getByPk(Id);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public List<Detalleordencompra> read()
+        public List<DetalleOrdenCompra> read()
         {
             try
             {
-                return Detalleordencompra.read();
+                return DetalleOrdenCompra.read();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public int insert(Detalleordencompra obj)
+        public int insert(DetalleOrdenCompra obj)
         {
             try
             {
-                return Detalleordencompra.insert(obj);
+                return DetalleOrdenCompra.insert(obj);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public void update(Detalleordencompra obj)
+        public void update(DetalleOrdenCompra obj)
         {
             try
             {
-                Detalleordencompra.update(obj);
+                DetalleOrdenCompra.update(obj);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public void delete(Detalleordencompra obj)
+        public void delete(DetalleOrdenCompra obj)
         {
             try
             {
-                Detalleordencompra.delete(obj);
+                DetalleOrdenCompra.delete(obj);
             }
             catch (Exception ex)
             {

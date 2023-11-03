@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\NET2022\\WebApiCompras\\WebApiCompras.csproj": {}
+    "F:\\Desarrollos\\MuniVillaAllende\\Compras\\WebApiCompras.csproj": {}
   },
   "projects": {
-    "D:\\NET2022\\WebApiCompras\\WebApiCompras.csproj": {
+    "F:\\Desarrollos\\MuniVillaAllende\\Compras\\WebApiCompras.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\NET2022\\WebApiCompras\\WebApiCompras.csproj",
+        "projectUniqueName": "F:\\Desarrollos\\MuniVillaAllende\\Compras\\WebApiCompras.csproj",
         "projectName": "WebApiCompras",
-        "projectPath": "D:\\NET2022\\WebApiCompras\\WebApiCompras.csproj",
-        "packagesPath": "C:\\Users\\Martin\\.nuget\\packages\\",
-        "outputPath": "D:\\NET2022\\WebApiCompras\\obj\\",
+        "projectPath": "F:\\Desarrollos\\MuniVillaAllende\\Compras\\WebApiCompras.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "F:\\Desarrollos\\MuniVillaAllende\\Compras\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Martin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +44,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
@@ -67,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.317\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

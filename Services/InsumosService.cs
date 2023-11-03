@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using WebApiCompras.Entities;
+
 namespace WebApiCompras.Services
 {
     public class InsumosService : IInsumosService

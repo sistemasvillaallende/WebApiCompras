@@ -5,9 +5,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApiCompras.Entities;
+
 namespace WebApiCompras.Entities
 {
-    public class Detallerequerimiento : DALBase
+    public class DetalleRequerimiento : DALBase
     {
         public int Id { get; set; }
         public int IdRequerimiento { get; set; }
@@ -15,7 +17,7 @@ namespace WebApiCompras.Entities
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
 
-        public Detallerequerimiento()
+        public DetalleRequerimiento()
         {
             Id = 0;
             IdRequerimiento = 0;
@@ -24,10 +26,10 @@ namespace WebApiCompras.Entities
             Precio = 0;
         }
 
-        private static List<Detallerequerimiento> mapeo(SqlDataReader dr)
+        private static List<DetalleRequerimiento> mapeo(SqlDataReader dr)
         {
-            List<Detallerequerimiento> lst = new List<Detallerequerimiento>();
-            Detallerequerimiento obj;
+            List<DetalleRequerimiento> lst = new List<DetalleRequerimiento>();
+            DetalleRequerimiento obj;
             if (dr.HasRows)
             {
                 int Id = dr.GetOrdinal("Id");
@@ -37,7 +39,7 @@ namespace WebApiCompras.Entities
                 int Precio = dr.GetOrdinal("Precio");
                 while (dr.Read())
                 {
-                    obj = new Detallerequerimiento();
+                    obj = new DetalleRequerimiento();
                     if (!dr.IsDBNull(Id)) { obj.Id = dr.GetInt32(Id); }
                     if (!dr.IsDBNull(IdRequerimiento)) { obj.IdRequerimiento = dr.GetInt32(IdRequerimiento); }
                     if (!dr.IsDBNull(IdInsumo)) { obj.IdInsumo = dr.GetInt32(IdInsumo); }
@@ -49,16 +51,16 @@ namespace WebApiCompras.Entities
             return lst;
         }
 
-        public static List<Detallerequerimiento> read()
+        public static List<DetalleRequerimiento> read()
         {
             try
             {
-                List<Detallerequerimiento> lst = new List<Detallerequerimiento>();
+                List<DetalleRequerimiento> lst = new List<DetalleRequerimiento>();
                 using (SqlConnection con = GetConnection())
                 {
                     SqlCommand cmd = con.CreateCommand();
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT *FROM Detallerequerimiento";
+                    cmd.CommandText = "SELECT * FROM DetalleRequerimiento";
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
@@ -71,15 +73,14 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static Detallerequerimiento getByPk(
-        int Id)
+        public static DetalleRequerimiento getByPk(int Id)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *FROM Detallerequerimiento WHERE");
+                sql.AppendLine("SELECT * FROM DetalleRequerimiento WHERE");
                 sql.AppendLine("Id = @Id");
-                Detallerequerimiento obj = null;
+                DetalleRequerimiento obj = null;
                 using (SqlConnection con = GetConnection())
                 {
                     SqlCommand cmd = con.CreateCommand();
@@ -88,7 +89,7 @@ namespace WebApiCompras.Entities
                     cmd.Parameters.AddWithValue("@Id", Id);
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
-                    List<Detallerequerimiento> lst = mapeo(dr);
+                    List<DetalleRequerimiento> lst = mapeo(dr);
                     if (lst.Count != 0)
                         obj = lst[0];
                 }
@@ -100,12 +101,12 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static int insert(Detallerequerimiento obj)
+        public static int insert(DetalleRequerimiento obj)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("INSERT INTO Detallerequerimiento(");
+                sql.AppendLine("INSERT INTO DetalleRequerimiento(");
                 sql.AppendLine("IdRequerimiento");
                 sql.AppendLine(", IdInsumo");
                 sql.AppendLine(", Cantidad");
@@ -138,12 +139,29 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static void update(Detallerequerimiento obj)
+        public static void insertList(List<DetalleRequerimiento> list, int idRequerimiento)
+        {
+            try
+            {
+                foreach (var item in list)
+                {
+                    item.IdRequerimiento = idRequerimiento;
+                    insert(item);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public static void update(DetalleRequerimiento obj)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("UPDATE  Detallerequerimiento SET");
+                sql.AppendLine("UPDATE  DetalleRequerimiento SET");
                 sql.AppendLine("IdRequerimiento=@IdRequerimiento");
                 sql.AppendLine(", IdInsumo=@IdInsumo");
                 sql.AppendLine(", Cantidad=@Cantidad");
@@ -169,12 +187,12 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static void delete(Detallerequerimiento obj)
+        public static void delete(DetalleRequerimiento obj)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("DELETE  Detallerequerimiento ");
+                sql.AppendLine("DELETE  DetalleRequerimiento ");
                 sql.AppendLine("WHERE");
                 sql.AppendLine("Id=@Id");
                 using (SqlConnection con = GetConnection())
@@ -192,6 +210,34 @@ namespace WebApiCompras.Entities
                 throw ex;
             }
         }
+
+        public static List<DetalleRequerimiento> getByIdRequerimiento(int idRequerimiento)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM DetalleRequerimiento WHERE");
+                sql.AppendLine("IdRequerimiento = @IdRequerimiento");
+                List<DetalleRequerimiento> lst = new List<DetalleRequerimiento>();
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdRequerimiento", idRequerimiento);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
 
     }
 }

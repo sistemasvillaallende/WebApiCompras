@@ -19,13 +19,14 @@ namespace WebApiCompras
             services.AddScoped<IColeccionesService, ColeccionesService>();
             services.AddScoped<IDetalleordencompraService, DetalleordencompraService>();
             services.AddScoped<IDetalleordenpedidoService, DetalleordenpedidoService>();
-            services.AddScoped<IUsuarioServices, UsuarioServices>();
-            services.AddScoped<IUsuarioServices, UsuarioServices>();
-            services.AddScoped<IUsuarioServices, UsuarioServices>();
-            services.AddScoped<IUsuarioServices, UsuarioServices>();
-            services.AddScoped<IUsuarioServices, UsuarioServices>();
-            services.AddScoped<IUsuarioServices, UsuarioServices>();
-            services.AddScoped<IUsuarioServices, UsuarioServices>();
+            services.AddScoped<IRequerimientoService, RequerimientoService>();
+            services.AddScoped<IInsumosService, InsumosService>();
+            services.AddScoped<ISurtidoService, SurtidoService>();
+            //services.AddScoped<IUsuarioServices, UsuarioServices>();
+            //services.AddScoped<IUsuarioServices, UsuarioServices>();
+            //services.AddScoped<IUsuarioServices, UsuarioServices>();
+            //services.AddScoped<IUsuarioServices, UsuarioServices>();
+            //services.AddScoped<IUsuarioServices, UsuarioServices>();
 
             //
             services.AddCors();
