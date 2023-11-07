@@ -13,6 +13,9 @@ namespace WebApiCompras.Services
         public int insert(Proveedor obj);
         public void update(Proveedor obj);
         public void delete(Proveedor obj);
+        public List<Proveedor> GetByTipo(string tipo);
+        public List<Proveedor> getByActivo(bool activo);
+        public List<Proveedor> getByNombre(string nombre);
     }
 }
 

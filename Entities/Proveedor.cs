@@ -136,8 +136,59 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static Proveedor getByPk(
-        int Id)
+        public static List<Proveedor> getByTipo(string tipo)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Proveedor WHERE");
+                sql.AppendLine("Tipo = @Tipo");
+                List<Proveedor> lst = new List<Proveedor>();
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@Tipo", tipo);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Proveedor> getByActivo(bool activo)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Proveedor WHERE");
+                sql.AppendLine("Activo = @Activo");
+                List<Proveedor> lst = new List<Proveedor>();
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@Activo", activo);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static Proveedor getByPk(int Id)
         {
             try
             {
@@ -158,6 +209,32 @@ namespace WebApiCompras.Entities
                         obj = lst[0];
                 }
                 return obj;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Proveedor> getByNombre(string nombre)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Proveedor WHERE");
+                sql.AppendLine("Nombre LIKE '%' + @Nombre + '%'");
+                List<Proveedor> lst = new List<Proveedor>();
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@Nombre", nombre);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
             }
             catch (Exception ex)
             {

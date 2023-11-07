@@ -66,6 +66,39 @@ namespace WebApiCompras.Services
                 throw ex;
             }
         }
+        public List<Proveedor> GetByTipo(string tipo)
+        {
+            try
+            {
+                return Proveedor.getByTipo(tipo);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Proveedor> getByActivo(bool activo)
+        {
+            try
+            {
+                return Proveedor.getByActivo(activo);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Proveedor> getByNombre(string nombre)
+        {
+            try
+            {
+                return Proveedor.getByNombre(nombre);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 
