@@ -22,13 +22,10 @@ namespace WebApiCompras
             services.AddScoped<IRequerimientoService, RequerimientoService>();
             services.AddScoped<IInsumosService, InsumosService>();
             services.AddScoped<ISurtidoService, SurtidoService>();
-            //services.AddScoped<IUsuarioServices, UsuarioServices>();
-            //services.AddScoped<IUsuarioServices, UsuarioServices>();
-            //services.AddScoped<IUsuarioServices, UsuarioServices>();
-            //services.AddScoped<IUsuarioServices, UsuarioServices>();
-            //services.AddScoped<IUsuarioServices, UsuarioServices>();
-
-            //
+            services.AddScoped<IProveedorService, ProveedorService>();
+            services.AddScoped<IOrdenpedidoService, OrdenpedidoService>();
+            services.AddScoped<IOrdencompraService, OrdencompraService>();
+            services.AddScoped<IDetalleRequerimientoService, DetalleRequerimientoService>();
             services.AddCors();
 
         }

@@ -88,8 +88,7 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static Colecciones getByPk(
-        int Id)
+        public static Colecciones getByPk(int Id)
         {
             try
             {
@@ -110,6 +109,32 @@ namespace WebApiCompras.Entities
                         obj = lst[0];
                 }
                 return obj;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Colecciones> getByNombre(string nombre)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Colecciones WHERE");
+                sql.AppendLine("Nombre LIKE '%' + @Nombre + '%'");
+                List<Colecciones> lst = new List<Colecciones>();
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@Nombre", nombre);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
             }
             catch (Exception ex)
             {

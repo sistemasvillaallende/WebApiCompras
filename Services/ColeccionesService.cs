@@ -66,6 +66,18 @@ namespace WebApiCompras.Services
                 throw ex;
             }
         }
+
+        public List<Colecciones> getByNombre(string nombre)
+        {
+            try
+            {
+                return Colecciones.getByNombre(nombre);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 
