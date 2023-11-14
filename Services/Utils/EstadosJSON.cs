@@ -33,7 +33,7 @@ namespace WebApiCompras.Services.Utils
                 return null; // Manejo de error
             }
         }
-        public static string AgregarEstado(int id, string nombre, string tipo, string json = null)
+        public static string AgregarEstado(int id, string nombre, string tipo, string? json = null)
         {
             MiObjeto objeto;
 

@@ -4,24 +4,25 @@ using WebApiCompras.Entities;
 
 namespace WebApiCompras.Controllers
 {
-[ApiController]
-[Route ("[controller]/[action]")]
-public class OrdenpedidoController : Controller
-{
-private IOrdenpedidoService _OrdenpedidoService;
-public OrdenpedidoController (IOrdenpedidoService OrdenpedidoService) {
-    _OrdenpedidoService = OrdenpedidoService;
-}
-[HttpGet]
-public IActionResult getByPk(int Id)
-{
-    var Ordenpedido = _OrdenpedidoService.getByPk(Id);
-    if (Ordenpedido == null)
+    [ApiController]
+    [Route ("[controller]/[action]")]
+    public class OrdenpedidoController : Controller
     {
-        return BadRequest(new { message = "Error al obtener los datos" });
-    }
-    return Ok(Ordenpedido);
-}
+        private IOrdenpedidoService _OrdenpedidoService;
+        public OrdenpedidoController (IOrdenpedidoService OrdenpedidoService) {
+            _OrdenpedidoService = OrdenpedidoService;
+        }
+        [HttpGet]
+        public IActionResult getByPk(int Id)
+        {
+            var Ordenpedido = _OrdenpedidoService.getByPk(Id);
+            if (Ordenpedido == null)
+            {
+                return BadRequest(new { message = "Error al obtener los datos" });
+            }
+            return Ok(Ordenpedido);
+        }
+        [HttpPost]
         public IActionResult NuevoOrdenpedido(Ordenpedido obj)
         {
             var Id = _OrdenpedidoService.insert(obj);

@@ -66,6 +66,61 @@ namespace WebApiCompras.Services
                 throw ex;
             }
         }
+        public List<OrdenCompra> getByDireccion(int idDireccion)
+        {
+            try
+            {
+                return OrdenCompra.getByDireccion(idDireccion);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<OrdenCompra> getBySecretaria(int idSecretaria)
+        {
+            try
+            {
+                return OrdenCompra.getBySecretaria(idSecretaria);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<OrdenCompra> getByOficina(int idOficina)
+        {
+            try
+            {
+                return OrdenCompra.getByOficina(idOficina);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<OrdenCompra> getByUsuario(int idUsuario)
+        {
+            try
+            {
+                return OrdenCompra.getByUsuario(idUsuario);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<OrdenCompra> getByOrdenPedido(int idOrdenPedido)
+        {
+            try
+            {
+                return OrdenCompra.getByOrdenPedido(idOrdenPedido);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 
