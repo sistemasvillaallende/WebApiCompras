@@ -17,8 +17,7 @@ namespace WebApiCompras.Controllers
             _DetalleRequerimientoService = DetallerequerimientoService;
         }
         [HttpGet]
-        public IActionResult getByPk(
-        int Id)
+        public IActionResult getByPk(int Id)
         {
             var Detallerequerimiento = _DetalleRequerimientoService.getByPk(Id);
             if (Detallerequerimiento == null)
@@ -37,12 +36,6 @@ namespace WebApiCompras.Controllers
             }
             return Ok(Id);
         }
-
-
-
-
-
-
     }
 }
 

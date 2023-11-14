@@ -72,8 +72,7 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static DetalleOrdenpedido getByPk(
-        int Id)
+        public static DetalleOrdenpedido getByPk(int Id)
         {
             try
             {
@@ -94,6 +93,32 @@ namespace WebApiCompras.Entities
                         obj = lst[0];
                 }
                 return obj;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<DetalleOrdenpedido> getByOrdenPedido(int idOrdenPedido)
+        {
+            try
+            {
+                List<DetalleOrdenpedido> lst = new List<DetalleOrdenpedido>();
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM DetalleOrdenpedido WHERE");
+                sql.AppendLine("IdOrdenPedido = @IdOrdenPedido");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdOrdenPedido", idOrdenPedido);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
             }
             catch (Exception ex)
             {

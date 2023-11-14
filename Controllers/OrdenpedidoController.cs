@@ -102,12 +102,6 @@ public IActionResult getByPk(int Id)
             }
             return Ok(Coleccion);
         }
-
-
-
-
-
-
     }
 }
 

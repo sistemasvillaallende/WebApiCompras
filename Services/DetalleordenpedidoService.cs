@@ -55,6 +55,17 @@ namespace WebApiCompras.Services
                 throw ex;
             }
         }
+        public List<DetalleOrdenpedido> getByOrdenPedido(int idOrdenPedido)
+        {
+            try
+            {
+                return DetalleOrdenpedido.getByOrdenPedido(idOrdenPedido);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public void delete(DetalleOrdenpedido obj)
         {
             try
