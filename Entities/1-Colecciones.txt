@@ -11,5 +11,10 @@ Estados en los Requerimientos:
 Llaves:
 ---------------------------------------------
 1- Llave presupuestaria: El requerimiento despues de actualizado sus precios, es sometido a control presupuestario.
-2- Llave financiera: El requerimiento una vez aprobado presupuestariamente, es sometido a control de financiero. Es decir la existencia de fondos suficientes para atender su pago
+2- Llave financiera: El requerimiento una vez aprobado presupuestariamente, es sometido a control de financiero. Es decir la existencia de fondos suficientes para atender su pago.
+
+Surtidos:
+---------------------------------------------
+Las estructuras de Surtidos se podran aspciar con prioridades. Donde la prioridad la tendra un usuario, y si no lo tiene empezara a escalar en el orden de la organizacio.
+Usuario / Oficina / Direccion / Secretaria
 

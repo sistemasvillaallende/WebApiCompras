@@ -23,6 +23,7 @@ namespace WebApiCompras.Entities
         public int IdDireccion { get; set; }
         public int IdSecretaria { get; set; }
         #endregion
+
         public Surtido()
         {
             Id = 0;
@@ -38,6 +39,7 @@ namespace WebApiCompras.Entities
             IdSecretaria = 0;
         }
 
+        #region metodos
         private static List<Surtido> mapeo(SqlDataReader dr)
         {
             List<Surtido> lst = new List<Surtido>();
@@ -177,6 +179,58 @@ namespace WebApiCompras.Entities
             }
         }
 
+        public static List<Surtido> getByDireccion(int IdDireccion)
+        {
+            try
+            {
+                List<Surtido> lst = new List<Surtido>();
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Surtido WHERE");
+                sql.AppendLine("IdDireccion = @IdDireccion");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdDireccion", IdDireccion);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Surtido> getBySecretaria(int IdSecretaria)
+        {
+            try
+            {
+                List<Surtido> lst = new List<Surtido>();
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Surtido WHERE");
+                sql.AppendLine("IdSecretaria = @IdSecretaria");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdSecretaria", IdSecretaria);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static int insert(Surtido obj)
         {
             try
@@ -297,7 +351,7 @@ namespace WebApiCompras.Entities
                 throw ex;
             }
         }
-
+        #endregion
     }
 }
 

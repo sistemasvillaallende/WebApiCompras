@@ -13,6 +13,10 @@ namespace WebApiCompras.Services
         public int insert(Surtido obj);
         public void update(Surtido obj);
         public void delete(Surtido obj);
+        public List<Surtido> getByUsuario(int IdUsuario);
+        public List<Surtido> getByOficina(int IdOficina);
+        public List<Surtido> getByDireccion(int IdDireccion);
+        public List<Surtido> getBySecretaria(int IdSecretaria);
     }
 }
 

@@ -54,7 +54,7 @@ namespace WebApiCompras.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Error al actualizar el proveedor" });
+                return StatusCode(500, new { message = "Error al actualizar la coleccion" });
             }
         }
 

@@ -96,8 +96,111 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static Ordenpedido getByPk(
-        int Id)
+        public static List<Ordenpedido> getByUsuario(int idUsuario)
+        {
+            try
+            {
+                List<Ordenpedido> lst = new List<Ordenpedido>();
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Ordenpedido WHERE");
+                sql.AppendLine("IdUsuario = @IdUsuario");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Ordenpedido> getByOficina(int idOficina)
+        {
+            try
+            {
+                List<Ordenpedido> lst = new List<Ordenpedido>();
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Ordenpedido WHERE");
+                sql.AppendLine("IdOficina = @IdOficina");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdOficina", idOficina);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Ordenpedido> getBySecretaria(int idSecretaria)
+        {
+            try
+            {
+                List<Ordenpedido> lst = new List<Ordenpedido>();
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Ordenpedido WHERE");
+                sql.AppendLine("IdSecretaria = @IdSecretaria");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdSecretaria", idSecretaria);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Ordenpedido> getByDireccion(int idDireccion)
+        {
+            try
+            {
+                List<Ordenpedido> lst = new List<Ordenpedido>();
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Ordenpedido WHERE");
+                sql.AppendLine("IdDireccion = @IdDireccion");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdDireccion", idDireccion);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static Ordenpedido getByPk(int Id)
         {
             try
             {
@@ -111,6 +214,34 @@ namespace WebApiCompras.Entities
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = sql.ToString();
                     cmd.Parameters.AddWithValue("@Id", Id);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    List<Ordenpedido> lst = mapeo(dr);
+                    if (lst.Count != 0)
+                        obj = lst[0];
+                }
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static Ordenpedido getByRequerimiento(int idRequerimiento)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Ordenpedido WHERE");
+                sql.AppendLine("IdRequerimiento = @IdRequerimiento");
+                Ordenpedido obj = null;
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdRequerimiento", idRequerimiento);
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     List<Ordenpedido> lst = mapeo(dr);

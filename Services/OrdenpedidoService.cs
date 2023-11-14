@@ -11,11 +11,11 @@ namespace WebApiCompras.Services
 {
     public class OrdenpedidoService : IOrdenpedidoService
     {
-        public Ordenpedido getByPk(int Id)
+        public Ordenpedido getByPk(int id)
         {
             try
             {
-                return Ordenpedido.getByPk(Id);
+                return Ordenpedido.getByPk(id);
             }
             catch (Exception ex)
             {
@@ -60,6 +60,66 @@ namespace WebApiCompras.Services
             try
             {
                 Ordenpedido.delete(obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public Ordenpedido getByRequerimiento(int idRequerimiento)
+        {
+            try
+            {
+                return Ordenpedido.getByRequerimiento(idRequerimiento);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<Ordenpedido> getByDireccion(int idDireccion)
+        {
+            try
+            {
+                return Ordenpedido.getByDireccion(idDireccion);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<Ordenpedido> getBySecretaria(int idSecretaria)
+        {
+            try
+            {
+                return Ordenpedido.getBySecretaria(idSecretaria);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<Ordenpedido> getByOficina(int idOficina)
+        {
+            try
+            {
+                return Ordenpedido.getByOficina(idOficina);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<Ordenpedido> getByUsuario(int idUsuario)
+        {
+            try
+            {
+                return Ordenpedido.getByUsuario(idUsuario);
             }
             catch (Exception ex)
             {

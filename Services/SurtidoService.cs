@@ -33,17 +33,6 @@ namespace WebApiCompras.Services
                 throw ex;
             }
         }
-        public List<Surtido> getBySector(int IdSector)
-        {
-            try
-            {
-                return Surtido.getByUsuario(IdSector);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
         public List<Surtido> getByUsuario(int IdUsuario)
         {
             try
@@ -82,6 +71,39 @@ namespace WebApiCompras.Services
             try
             {
                 Surtido.delete(obj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Surtido> getByOficina(int IdOficina)
+        {
+            try
+            {
+                return Surtido.getByOficina(IdOficina);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Surtido> getByDireccion(int IdDireccion)
+        {
+            try
+            {
+                return Surtido.getByDireccion(IdDireccion);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Surtido> getBySecretaria(int IdSecretaria)
+        {
+            try
+            {
+                return Surtido.getBySecretaria(IdSecretaria);
             }
             catch (Exception ex)
             {
