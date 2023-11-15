@@ -24,7 +24,7 @@ namespace WebApiCompras.Controllers
             return Ok(Detalleordenpedido);
         }
         [HttpPost]
-        public IActionResult NuevoSurtido(Surtido obj)
+        public IActionResult NuevoDetalleOrdenPedido(DetalleOrdenpedido obj)
         {
             var Id = _DetalleordenpedidoService.insert(obj);
 
@@ -35,14 +35,14 @@ namespace WebApiCompras.Controllers
             return Ok(Id);
         }
         [HttpPost]
-        public IActionResult UpdateSurtido(DetalleOrdenpedido obj)
+        public IActionResult UpdateDetalleOrdenPedido(DetalleOrdenpedido obj)
         {
             try
             {
                 if (obj != null)
                 {
                     _DetalleordenpedidoService.update(obj);
-                    return Ok(new { message = "Surtido actualizado exitosamente" });
+                    return Ok(new { message = "Actualizado exitosamente" });
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace WebApiCompras.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Error al actualizar el surtido" });
+                return StatusCode(500, new { message = "Error al actualizar" });
             }
         }
         [HttpGet]

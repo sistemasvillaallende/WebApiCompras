@@ -10,12 +10,15 @@ namespace WebApiCompras.Entities
 {
     public class DetalleOrdenCompra : DALBase
     {
+        #region propiedades
         public int Id { get; set; }
         public int IdOrdenCompra { get; set; }
         public int IdInsumo { get; set; }
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
+        #endregion
 
+        #region metodos
         public DetalleOrdenCompra()
         {
             Id = 0;
@@ -72,8 +75,7 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static DetalleOrdenCompra getByPk(
-        int Id)
+        public static DetalleOrdenCompra getByPk(int Id)
         {
             try
             {
@@ -94,6 +96,32 @@ namespace WebApiCompras.Entities
                         obj = lst[0];
                 }
                 return obj;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<DetalleOrdenCompra> getByOrdenCompra(int idOrdenCompra)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM DetalleOrdenCompra WHERE");
+                sql.AppendLine("IdOrdenCompra = @IdOrdenCompra");
+                List<DetalleOrdenCompra> lst = new List<DetalleOrdenCompra>();
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdOrdenCompra", idOrdenCompra);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
             }
             catch (Exception ex)
             {
@@ -193,7 +221,7 @@ namespace WebApiCompras.Entities
                 throw ex;
             }
         }
-
+        #endregion
     }
 }
 

@@ -13,6 +13,7 @@ namespace WebApiCompras.Services
         public int insert(DetalleOrdenCompra obj);
         public void update(DetalleOrdenCompra obj);
         public void delete(DetalleOrdenCompra obj);
+        public List<DetalleOrdenCompra> getByOrdenCompra(int idOrdenCompra);
     }
 }
 

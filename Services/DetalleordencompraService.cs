@@ -66,6 +66,17 @@ namespace WebApiCompras.Services
                 throw ex;
             }
         }
+        public List<DetalleOrdenCompra> getByOrdenCompra(int idOrdenCompra)
+        {
+            try
+            {
+                return DetalleOrdenCompra.getByOrdenCompra(idOrdenCompra);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 
