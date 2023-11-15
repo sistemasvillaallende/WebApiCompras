@@ -36,6 +36,57 @@ namespace WebApiCompras.Controllers
             }
             return Ok(Id);
         }
+        [HttpPost]
+        public IActionResult UpdateDetalleRequerimiento(DetalleRequerimiento obj)
+        {
+            try
+            {
+                if (obj != null)
+                {
+                    _DetalleRequerimientoService.update(obj);
+                    return Ok(new { message = "Actualizado exitosamente" });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Los datos de entrada no son válidos" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error al actualizar" });
+            }
+        }
+        [HttpGet]
+        public IActionResult read()
+        {
+            var Coleccion = _DetalleRequerimientoService.read();
+            if (Coleccion == null)
+            {
+                return BadRequest(new { message = "Error al obtener los datos" });
+            }
+            return Ok(Coleccion);
+        }
+        [HttpGet]
+        public IActionResult delete(DetalleRequerimiento obj)
+        {
+            _DetalleRequerimientoService.delete(obj);
+            var detalleordencompra = _DetalleRequerimientoService.getByPk(obj.Id);
+            if (detalleordencompra != null)
+            {
+                return BadRequest(new { message = "Error al obtener los datos" });
+            }
+            return Ok(detalleordencompra);
+        }
+        [HttpGet]
+        public IActionResult getByOrdenPedido(int idRequerimiento)
+        {
+            var Detallerequerimiento = _DetalleRequerimientoService.getByIdRequerimiento(idRequerimiento);
+            if (Detallerequerimiento == null)
+            {
+                return BadRequest(new { message = "Error al obtener los datos" });
+            }
+            return Ok(Detallerequerimiento);
+        }
     }
 }
 

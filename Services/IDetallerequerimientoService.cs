@@ -13,6 +13,7 @@ namespace WebApiCompras.Services
         public int insert(DetalleRequerimiento obj);
         public void update(DetalleRequerimiento obj);
         public void delete(DetalleRequerimiento obj);
+        public List<DetalleRequerimiento> getByIdRequerimiento(int idRequerimiento);
     }
 }
 

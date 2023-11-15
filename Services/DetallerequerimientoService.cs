@@ -66,6 +66,18 @@ namespace WebApiCompras.Services
                 throw ex;
             }
         }
+
+        public List<DetalleRequerimiento> getByIdRequerimiento(int idRequerimiento)
+        {
+            try
+            {
+                return DetalleRequerimiento.getByIdRequerimiento(idRequerimiento);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 
