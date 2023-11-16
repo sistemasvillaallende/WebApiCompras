@@ -13,6 +13,7 @@ namespace WebApiCompras.Services
         public int insert(Insumos obj);
         public void update(Insumos obj);
         public void delete(Insumos obj);
+        public List<Insumos> getByCuenta(string cuenta);
     }
 }
 

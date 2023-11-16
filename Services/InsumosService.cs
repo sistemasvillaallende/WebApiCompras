@@ -66,6 +66,18 @@ namespace WebApiCompras.Services
                 throw ex;
             }
         }
+
+        public List<Insumos> getByCuenta(string cuenta)
+        {
+            try
+            {
+                return Insumos.getByCuenta(cuenta);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 

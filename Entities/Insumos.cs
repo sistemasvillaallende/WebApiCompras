@@ -10,6 +10,7 @@ namespace WebApiCompras.Entities
 {
     public class Insumos : DALBase
     {
+        #region propiedades
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Cuenta { get; set; }
@@ -21,6 +22,7 @@ namespace WebApiCompras.Entities
         public int IdOficina { get; set; }
         public int IdDireccion { get; set; }
         public int IdSecretaria { get; set; }
+        #endregion
 
         public Insumos()
         {
@@ -37,6 +39,7 @@ namespace WebApiCompras.Entities
             IdSecretaria = 0;
         }
 
+        #region metodos
         private static List<Insumos> mapeo(SqlDataReader dr)
         {
             List<Insumos> lst = new List<Insumos>();
@@ -96,8 +99,7 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static Insumos getByPk(
-        int Id)
+        public static Insumos getByPk(int Id)
         {
             try
             {
@@ -248,6 +250,32 @@ namespace WebApiCompras.Entities
             }
         }
 
+        public static List<Insumos> getByCuenta(string cuenta)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT * FROM Insumos WHERE");
+                sql.AppendLine("Cuenta = @Cuenta");
+                List<Insumos> lst = new List<Insumos>();
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@Cuenta", cuenta);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
     }
 }
 
