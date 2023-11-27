@@ -22,6 +22,8 @@ namespace WebApiCompras.Entities
         public int IdOficina { get; set; }
         public int IdDireccion { get; set; }
         public int IdSecretaria { get; set; }
+        public string NombreInsumo { get; set; }
+        public decimal Precio { get; set; }
         #endregion
 
         public Surtido()
@@ -37,6 +39,7 @@ namespace WebApiCompras.Entities
             IdOficina = 0;
             IdDireccion = 0;
             IdSecretaria = 0;
+            NombreInsumo = String.Empty;
         }
 
         #region metodos
@@ -57,6 +60,8 @@ namespace WebApiCompras.Entities
                 int IdOficina = dr.GetOrdinal("IdOficina");
                 int IdDireccion = dr.GetOrdinal("IdDireccion");
                 int IdSecretaria = dr.GetOrdinal("IdSecretaria");
+                int NombreInsumo = dr.GetOrdinal("NombreInsumo");
+                int Precio = dr.GetOrdinal("Precio");
                 while (dr.Read())
                 {
                     obj = new Surtido();
@@ -71,6 +76,9 @@ namespace WebApiCompras.Entities
                     if (!dr.IsDBNull(IdOficina)) { obj.IdOficina = dr.GetInt32(IdOficina); }
                     if (!dr.IsDBNull(IdDireccion)) { obj.IdDireccion = dr.GetInt32(IdDireccion); }
                     if (!dr.IsDBNull(IdSecretaria)) { obj.IdSecretaria = dr.GetInt32(IdSecretaria); }
+                    if (!dr.IsDBNull(NombreInsumo)) { obj.NombreInsumo = dr.GetString(NombreInsumo); }
+                    if (!dr.IsDBNull(Precio)) { obj.Precio = dr.GetDecimal(Precio); }
+
                     lst.Add(obj);
                 }
             }
@@ -86,7 +94,7 @@ namespace WebApiCompras.Entities
                 {
                     SqlCommand cmd = con.CreateCommand();
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT * FROM Surtido";
+                    cmd.CommandText = "SELECT *, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo";
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
@@ -104,7 +112,7 @@ namespace WebApiCompras.Entities
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT * FROM Surtido WHERE");
+                sql.AppendLine("SELECT *, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
                 sql.AppendLine("Id = @Id");
                 Surtido obj = null;
                 using (SqlConnection con = GetConnection())
@@ -133,7 +141,7 @@ namespace WebApiCompras.Entities
             {
                 List<Surtido> lst = new List<Surtido>();
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT * FROM Surtido WHERE");
+                sql.AppendLine("SELECT *, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
                 sql.AppendLine("IdUsuario = @IdUsuario");
                 using (SqlConnection con = GetConnection())
                 {
@@ -159,7 +167,7 @@ namespace WebApiCompras.Entities
             {
                 List<Surtido> lst = new List<Surtido>();
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT * FROM Surtido WHERE");
+                sql.AppendLine("SELECT *, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
                 sql.AppendLine("IdOficina = @IdOficina");
                 using (SqlConnection con = GetConnection())
                 {
@@ -185,7 +193,7 @@ namespace WebApiCompras.Entities
             {
                 List<Surtido> lst = new List<Surtido>();
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT * FROM Surtido WHERE");
+                sql.AppendLine("SELECT *, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
                 sql.AppendLine("IdDireccion = @IdDireccion");
                 using (SqlConnection con = GetConnection())
                 {
@@ -211,7 +219,7 @@ namespace WebApiCompras.Entities
             {
                 List<Surtido> lst = new List<Surtido>();
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT * FROM Surtido WHERE");
+                sql.AppendLine("SELECT *, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
                 sql.AppendLine("IdSecretaria = @IdSecretaria");
                 using (SqlConnection con = GetConnection())
                 {

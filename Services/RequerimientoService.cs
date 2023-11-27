@@ -119,6 +119,17 @@ namespace WebApiCompras.Services
                 throw ex;
             }
         }
+        public void updatePrecios(List<DetalleRequerimiento> lista)
+        {
+            try
+            {
+                Requerimiento.updatePrecios(lista);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
 

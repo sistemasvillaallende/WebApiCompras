@@ -187,6 +187,32 @@ namespace WebApiCompras.Entities
             }
         }
 
+        public static void updatePrecio(DetalleRequerimiento obj)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("UPDATE  DetalleRequerimiento SET");
+                sql.AppendLine(", Precio=@Precio");
+                sql.AppendLine("WHERE");
+                sql.AppendLine("Id=@Id");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@Id", obj.Id);
+                    cmd.Parameters.AddWithValue("@Precio", obj.Precio);
+                    cmd.Connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static void delete(DetalleRequerimiento obj)
         {
             try
@@ -236,8 +262,6 @@ namespace WebApiCompras.Entities
                 throw ex;
             }
         }
-
-
 
     }
 }

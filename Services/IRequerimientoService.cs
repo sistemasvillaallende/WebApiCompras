@@ -12,6 +12,7 @@ namespace WebApiCompras.Services
         public Requerimiento getByPk(int Id);
         public int insert(Requerimiento obj);
         public void update(Requerimiento obj);
+        public void updatePrecios(List<DetalleRequerimiento> lista);
         public void delete(Requerimiento obj);
         public List<Requerimiento> getByUsuario(int idUsuario);
         public List<Requerimiento> getByOficina(int idOficina);

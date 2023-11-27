@@ -87,6 +87,26 @@ namespace WebApiCompras.Controllers
             return Ok(Requerimiento);
         }
 
+        [HttpGet]
+        public IActionResult updatePrecios(List<DetalleRequerimiento> lista)
+        {
+            try
+            {
+                if (lista != null)
+                {
+                    _RequerimientoService.updatePrecios(lista);
+                    return Ok(new { message = "Actualizado exitosamente" });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Los datos de entrada no son válidos" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error al actualizar" });
+            }
+        }
     }
 }
 

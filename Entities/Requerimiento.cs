@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebApiCompras.Entities;
+using WebApiCompras.Entities.Soporte;
 
 namespace WebApiCompras.Entities
 {
@@ -247,6 +248,14 @@ namespace WebApiCompras.Entities
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public static void updatePrecios(List<DetalleRequerimiento> lista) 
+        {
+            foreach (var item in lista)
+            {
+                DetalleRequerimiento.updatePrecio(item);
             }
         }
 

@@ -6,8 +6,12 @@ CREATE TABLE Requerimiento (
 	Estado TEXT,
 	Historia TEXT, --Aqui se detalla la historia => Evento/Fecha/Usuario
 	IdUsuario INT NOT NULL,
-	IdSEctor INT NOT NULL,
-    CONSTRAINT FK_Requerimiento_Sector FOREIGN KEY (IdSector) REFERENCES Sector(Id),
+	IdOficina INT NOT NULL,
+    IdSecretaria INT NOT NULL,
+    IdDireccion INT NOT NULL,
+    CONSTRAINT FK_Requerimiento_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
+    CONSTRAINT FK_Requerimiento_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
+    CONSTRAINT FK_Requerimiento_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
     CONSTRAINT FK_Requerimiento_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
 );
 CREATE TABLE DetalleRequerimiento (
@@ -28,9 +32,12 @@ CREATE TABLE OrdenPedido (
     FormaLegal NVARCHAR(255),
 	Historia TEXT, --Aqui se detalla la historia => Evento/Fecha/Usuario
 	IdUsuario INT NOT NULL,
-	IdSEctor INT NOT NULL,
-	CONSTRAINT FK_Requerimiento_Sector FOREIGN KEY (IdRequerimiento) REFERENCES Requerimiento(Id),
-    CONSTRAINT FK_OrdenPedido_Sector FOREIGN KEY (IdSector) REFERENCES Sector(Id),
+	IdOficina INT NOT NULL,
+    IdSecretaria INT NOT NULL,
+    IdDireccion INT NOT NULL,
+	CONSTRAINT FK_OrdenPedido_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
+    CONSTRAINT FK_OrdenPedido_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
+    CONSTRAINT FK_OrdenPedido_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
     CONSTRAINT FK_OrdenPedido_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
 );
 CREATE TABLE DetalleOrdenPedido (
@@ -50,8 +57,12 @@ CREATE TABLE OrdenCompra (
     IdOrdenPedido INT,
 	Historia TEXT, --Aqui se detalla la historia => Evento/Fecha/Usuario
 	IdUsuario INT NOT NULL,
-	IdSEctor INT NOT NULL,
-    CONSTRAINT FK_OrdenCompra_Sector FOREIGN KEY (IdSector) REFERENCES Sector(Id),
+	IdOficina INT NOT NULL,
+    IdSecretaria INT NOT NULL,
+    IdDireccion INT NOT NULL,
+    CONSTRAINT FK_OrdenCompra_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
+    CONSTRAINT FK_OrdenCompra_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
+    CONSTRAINT FK_OrdenCompra_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
     CONSTRAINT FK_OrdenCompra_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
 );
 CREATE TABLE DetalleOrdenCompra (
@@ -71,18 +82,13 @@ CREATE TABLE Insumos (
     Nota NVARCHAR(MAX),
     Fecha DATETIME,
     IdUsuario INT NOT NULL,
-	IdSEctor INT NOT NULL,
-    CONSTRAINT FK_Insumos_Sector FOREIGN KEY (IdSector) REFERENCES Sector(Id),
+	IdOficina INT NOT NULL,
+    IdSecretaria INT NOT NULL,
+    IdDireccion INT NOT NULL,
+    CONSTRAINT FK_Insumos_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
+    CONSTRAINT FK_Insumos_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
+    CONSTRAINT FK_Insumos_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
     CONSTRAINT FK_Insumos_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
-);
-CREATE TABLE Sector (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Nombre NVARCHAR(255),
-    Activo BIT,
-    Nota NVARCHAR(MAX),
-    Fecha DATETIME,
-    IdUsuario INT NOT NULL,
-    CONSTRAINT FK_Sector_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
 );
 CREATE TABLE Proveedor (
     Id INT IDENTITY(1,1) PRIMARY KEY,
@@ -103,8 +109,10 @@ CREATE TABLE Proveedor (
 	Llaves TEXT,
     Activo BIT,
     IdUsuario INT NOT NULL,
-	IdSEctor INT NOT NULL,
-    CONSTRAINT FK_Proveedor_Sector FOREIGN KEY (IdSector) REFERENCES Sector(Id),
+	IdOficina INT NOT NULL,
+    CONSTRAINT FK_Proveedor_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
+    CONSTRAINT FK_Proveedor_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
+    CONSTRAINT FK_Proveedor_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
     CONSTRAINT FK_Proveedor_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
 );
 CREATE TABLE Surtido (
@@ -116,9 +124,12 @@ CREATE TABLE Surtido (
 	Llaves TEXT,
     Activo BIT,
     IdUsuario INT NOT NULL,
-	IdSEctor INT NOT NULL,
-    CONSTRAINT FK_Surtido_Sector FOREIGN KEY (IdSector) REFERENCES Sector(Id),
-    CONSTRAINT FK_Surtido_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id),
+	IdOficina INT NOT NULL,
+    IdSecretaria INT NOT NULL,
+    IdDireccion INT NOT NULL,
+    CONSTRAINT FK_Surtido_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
+    CONSTRAINT FK_Surtido_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
+    CONSTRAINT FK_Surtido_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
 	CONSTRAINT FK_Surtido_Insumo FOREIGN KEY (IdInsumo) REFERENCES Insumo(Id)
 );
 CREATE TABLE Colecciones (
@@ -128,7 +139,34 @@ CREATE TABLE Colecciones (
 	Coleccion NVARCHAR(100),
 	Activo BIT,
     IdUsuario INT NOT NULL,
-	IdSEctor INT NOT NULL,
-    CONSTRAINT FK_Colecciones_Sector FOREIGN KEY (IdSector) REFERENCES Sector(Id),
+	IdOficina INT NOT NULL,
+    IdSecretaria INT NOT NULL,
+    IdDireccion INT NOT NULL,
+    CONSTRAINT FK_Colecciones_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
+    CONSTRAINT FK_Colecciones_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
+    CONSTRAINT FK_Colecciones_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
     CONSTRAINT FK_Colecciones_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
+);
+--Actualizacion al 22-11-2023
+CREATE TABLE PresupuestoRequerimiento (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Fecha DATE,
+    Llaves TEXT,
+    Nota TEXT,
+	Estado TEXT,
+	Historia TEXT, --Aqui se detalla la historia => Evento/Fecha/Usuario
+    IdRequerimiento INT,
+    IdProveedor INT,
+	IdUsuario INT NOT NULL,
+    CONSTRAINT FK_PresupuestoRequerimiento_Sector FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
+    CONSTRAINT FK_PresupuestoRequerimiento_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
+);
+CREATE TABLE DetallePresupuestoRequerimiento (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    IdPresupuestoRequerimiento INT,
+    IdInsumo INT,
+    Cantidad INT,
+    Precio DECIMAL(10, 2),
+    CONSTRAINT FK_DetallePresupuestoRequerimiento_PresupuestoRequerimiento FOREIGN KEY (IdRequerimiento) REFERENCES Requerimiento(Id),
+    CONSTRAINT FK_DetallePresupuestoRequerimiento_Insumo FOREIGN KEY (IdInsumo) REFERENCES Insumo(Id)
 );
