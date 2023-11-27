@@ -17,7 +17,7 @@ namespace WebApiCompras.Services
         public List<OrdenCompra> getBySecretaria(int idSecretaria);
         public List<OrdenCompra> getByOficina(int idOficina);
         public List<OrdenCompra> getByUsuario(int idUsuario);
-        public List<OrdenCompra> getByOrdenPedido(int idOrdenPedido);
+        public OrdenCompra getByOrdenPedido(int idOrdenPedido);
     }
 }
 

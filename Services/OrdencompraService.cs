@@ -110,11 +110,11 @@ namespace WebApiCompras.Services
                 throw ex;
             }
         }
-        public List<OrdenCompra> getByOrdenPedido(int idOrdenPedido)
+        public OrdenCompra getByOrdenPedido(int idOrdenPedido)
         {
             try
             {
-                return OrdenCompra.getByOrdenPedido(idOrdenPedido);
+                return OrdenCompra.GetByOrdenPedido(idOrdenPedido);
             }
             catch (Exception ex)
             {

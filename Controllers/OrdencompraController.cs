@@ -114,6 +114,16 @@ namespace WebApiCompras.Controllers
             }
             return Ok(detalleOrdenCompra);
         }
+        [HttpGet]
+        public IActionResult getByOrdenPedido(int idOrdenPedido)
+        {
+            var Coleccion = _OrdencompraService.getByOrdenPedido(idOrdenPedido);
+            if (Coleccion == null)
+            {
+                return BadRequest(new { message = "Error al obtener los datos" });
+            }
+            return Ok(Coleccion);
+        }
     }
 }
 

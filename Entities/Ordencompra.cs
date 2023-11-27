@@ -123,7 +123,7 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static OrdenCompra getByOrdenPedido(int idOrdenPedido)
+        public static OrdenCompra GetByOrdenPedido(int idOrdenPedido)
         {
             try
             {
