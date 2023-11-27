@@ -27,7 +27,7 @@ namespace WebApiCompras.Controllers
         }
 
         [HttpPost]
-        public IActionResult NuevoRequerimiento(Requerimiento obj)
+        public IActionResult nuevoRequerimiento(Requerimiento obj)
         {
             if (obj.Items.Count == 0)
             {
