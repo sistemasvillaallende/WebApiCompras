@@ -8,8 +8,8 @@ namespace WebApiCompras.Controllers
     [Route ("[controller]/[action]")]
     public class OrdencompraController : Controller
     {
-        private IPresupuestoordencompraService _OrdencompraService;
-        public OrdencompraController (IPresupuestoordencompraService OrdencompraService) {
+        private IOrdencompraService _OrdencompraService;
+        public OrdencompraController (IOrdencompraService OrdencompraService) {
             _OrdencompraService = OrdencompraService;
         }
         [HttpGet]
