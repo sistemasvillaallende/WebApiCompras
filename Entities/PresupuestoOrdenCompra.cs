@@ -17,7 +17,6 @@ namespace WebApiCompras.Entities
         public DateTime Fecha { get; set; }
         public string Llaves { get; set; }
         public string Nota { get; set; }
-        public string Estado { get; set; }
         public string Historia { get; set; }
         public int IdUsuario { get; set; }
         public int IdOficina { get; set; }
@@ -34,7 +33,6 @@ namespace WebApiCompras.Entities
             Fecha = DateTime.Now;
             Llaves = string.Empty;
             Nota = string.Empty;
-            Estado = string.Empty;
             Historia = string.Empty;
             IdUsuario = 0;
             IdOficina = 0;
@@ -56,7 +54,6 @@ namespace WebApiCompras.Entities
                 int Fecha = dr.GetOrdinal("Fecha");
                 int Llaves = dr.GetOrdinal("Llaves");
                 int Nota = dr.GetOrdinal("Nota");
-                int Estado = dr.GetOrdinal("Estado");
                 int Historia = dr.GetOrdinal("Historia");
                 int IdUsuario = dr.GetOrdinal("IdUsuario");
                 int IdOficina = dr.GetOrdinal("IdOficina");
@@ -71,7 +68,6 @@ namespace WebApiCompras.Entities
                     if (!dr.IsDBNull(Fecha)) { obj.Fecha = dr.GetDateTime(Fecha); }
                     if (!dr.IsDBNull(Llaves)) { obj.Llaves = dr.GetString(Llaves); }
                     if (!dr.IsDBNull(Nota)) { obj.Nota = dr.GetString(Nota); }
-                    if (!dr.IsDBNull(Estado)) { obj.Estado = dr.GetString(Estado); }
                     if (!dr.IsDBNull(Historia)) { obj.Historia = dr.GetString(Historia); }
                     if (!dr.IsDBNull(IdUsuario)) { obj.IdUsuario = dr.GetInt32(IdUsuario); }
                     if (!dr.IsDBNull(IdOficina)) { obj.IdOficina = dr.GetInt32(IdOficina); }
@@ -146,7 +142,6 @@ namespace WebApiCompras.Entities
                 sql.AppendLine("Fecha");
                 sql.AppendLine(", Llaves");
                 sql.AppendLine(", Nota");
-                sql.AppendLine(", Estado");
                 sql.AppendLine(", Historia");
                 sql.AppendLine(", IdUsuario");
                 sql.AppendLine(", IdOficina");
@@ -160,7 +155,6 @@ namespace WebApiCompras.Entities
                 sql.AppendLine("@Fecha");
                 sql.AppendLine(", @Llaves");
                 sql.AppendLine(", @Nota");
-                sql.AppendLine(", @Estado");
                 sql.AppendLine(", @Historia");
                 sql.AppendLine(", @IdUsuario");
                 sql.AppendLine(", @IdOficina");
@@ -179,7 +173,6 @@ namespace WebApiCompras.Entities
                     cmd.Parameters.AddWithValue("@Fecha", obj.Fecha);
                     cmd.Parameters.AddWithValue("@Llaves", obj.Llaves);
                     cmd.Parameters.AddWithValue("@Nota", obj.Nota);
-                    cmd.Parameters.AddWithValue("@Estado", obj.Estado);
                     cmd.Parameters.AddWithValue("@Historia", obj.Historia);
                     cmd.Parameters.AddWithValue("@IdUsuario", obj.IdUsuario);
                     cmd.Parameters.AddWithValue("@IdOficina", obj.IdOficina);
@@ -211,7 +204,6 @@ namespace WebApiCompras.Entities
                 sql.AppendLine("Fecha=@Fecha");
                 sql.AppendLine(", Llaves=@Llaves");
                 sql.AppendLine(", Nota=@Nota");
-                sql.AppendLine(", Estado=@Estado");
                 sql.AppendLine(", Historia=@Historia");
                 sql.AppendLine(", IdUsuario=@IdUsuario");
                 sql.AppendLine(", IdOficina=@IdOficina");
@@ -229,7 +221,6 @@ namespace WebApiCompras.Entities
                     cmd.Parameters.AddWithValue("@Fecha", obj.Fecha);
                     cmd.Parameters.AddWithValue("@Llaves", obj.Llaves);
                     cmd.Parameters.AddWithValue("@Nota", obj.Nota);
-                    cmd.Parameters.AddWithValue("@Estado", obj.Estado);
                     cmd.Parameters.AddWithValue("@Historia", obj.Historia);
                     cmd.Parameters.AddWithValue("@IdUsuario", obj.IdUsuario);
                     cmd.Parameters.AddWithValue("@IdOficina", obj.IdOficina);

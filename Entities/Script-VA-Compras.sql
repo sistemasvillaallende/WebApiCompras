@@ -1,172 +1,344 @@
-CREATE TABLE Requerimiento (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Fecha DATE,
-    Llaves TEXT,
-    Nota TEXT,
-	Estado TEXT,
-	Historia TEXT, --Aqui se detalla la historia => Evento/Fecha/Usuario
-	IdUsuario INT NOT NULL,
-	IdOficina INT NOT NULL,
-    IdSecretaria INT NOT NULL,
-    IdDireccion INT NOT NULL,
-    CONSTRAINT FK_Requerimiento_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
-    CONSTRAINT FK_Requerimiento_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
-    CONSTRAINT FK_Requerimiento_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
-    CONSTRAINT FK_Requerimiento_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
-);
-CREATE TABLE DetalleRequerimiento (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    IdRequerimiento INT,
-    IdInsumo INT,
-    Cantidad INT,
-    Precio DECIMAL(10, 2),
-    CONSTRAINT FK_DetalleRequerimiento_Requerimiento FOREIGN KEY (IdRequerimiento) REFERENCES Requerimiento(Id),
-    CONSTRAINT FK_DetalleRequerimiento_Insumo FOREIGN KEY (IdInsumo) REFERENCES Insumo(Id)
-);
-CREATE TABLE OrdenPedido (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Fecha DATE,
-    Llaves TEXT,
-    Nota TEXT,
-    IdRequerimiento INT,
-    FormaLegal NVARCHAR(255),
-	Historia TEXT, --Aqui se detalla la historia => Evento/Fecha/Usuario
-	IdUsuario INT NOT NULL,
-	IdOficina INT NOT NULL,
-    IdSecretaria INT NOT NULL,
-    IdDireccion INT NOT NULL,
-	CONSTRAINT FK_OrdenPedido_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
-    CONSTRAINT FK_OrdenPedido_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
-    CONSTRAINT FK_OrdenPedido_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
-    CONSTRAINT FK_OrdenPedido_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
-);
-CREATE TABLE DetalleOrdenPedido (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    IdOrdenPedido INT,
-    IdInsumo INT,
-    Cantidad INT,
-    Precio DECIMAL(10, 2),
-    CONSTRAINT FK_DetalleOrdenPedido_OrdenPedido FOREIGN KEY (IdOrdenPedido) REFERENCES OrdenPedido(Id),
-    CONSTRAINT FK_DetalleOrdenPedido_Insumo FOREIGN KEY (IdInsumo) REFERENCES Insumo(Id)
-);
-CREATE TABLE OrdenCompra (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Fecha DATE,
-    Llaves TEXT,
-    Nota TEXT,
-    IdOrdenPedido INT,
-	Historia TEXT, --Aqui se detalla la historia => Evento/Fecha/Usuario
-	IdUsuario INT NOT NULL,
-	IdOficina INT NOT NULL,
-    IdSecretaria INT NOT NULL,
-    IdDireccion INT NOT NULL,
-    CONSTRAINT FK_OrdenCompra_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
-    CONSTRAINT FK_OrdenCompra_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
-    CONSTRAINT FK_OrdenCompra_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
-    CONSTRAINT FK_OrdenCompra_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
-);
-CREATE TABLE DetalleOrdenCompra (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    IdOrdenCompra INT,
-    IdInsumo INT,
-    Cantidad INT,
-    Precio DECIMAL(10, 2),
-    CONSTRAINT FK_DetalleOrdenCompra_OrdenCompra FOREIGN KEY (IdOrdenCompra) REFERENCES OrdenCompra(Id),
-    CONSTRAINT FK_DetalleOrdenCompra_Insumo FOREIGN KEY (IdInsumo) REFERENCES Insumo(Id)
-);
-
-CREATE TABLE Insumos (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Nombre NVARCHAR(255),
-    Activo BIT,
-    Nota NVARCHAR(MAX),
-    Fecha DATETIME,
-    IdUsuario INT NOT NULL,
-	IdOficina INT NOT NULL,
-    IdSecretaria INT NOT NULL,
-    IdDireccion INT NOT NULL,
-    CONSTRAINT FK_Insumos_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
-    CONSTRAINT FK_Insumos_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
-    CONSTRAINT FK_Insumos_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
-    CONSTRAINT FK_Insumos_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
-);
-CREATE TABLE Proveedor (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Nombre NVARCHAR(255),
-    NombreContacto NVARCHAR(255),
-    Direccion NVARCHAR(255),
-    Ciudad NVARCHAR(255),
-    ProvinciaEstado NVARCHAR(255),
-    CodigoPostal NVARCHAR(20),
-    Pais NVARCHAR(100),
-    Telefono NVARCHAR(20),
-    CorreoElectronico NVARCHAR(255),
-    SitioWeb NVARCHAR(255),
-    TipoProveedor NVARCHAR(100),
-    CategoriaProductosServicios NVARCHAR(255),
-    Notas NVARCHAR(MAX),
-    Fecha DATETIME,
-	Llaves TEXT,
-    Activo BIT,
-    IdUsuario INT NOT NULL,
-	IdOficina INT NOT NULL,
-    CONSTRAINT FK_Proveedor_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
-    CONSTRAINT FK_Proveedor_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
-    CONSTRAINT FK_Proveedor_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
-    CONSTRAINT FK_Proveedor_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
-);
-CREATE TABLE Surtido (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    IdInsumo INT,
-    Entidad NVARCHAR(100),
-    Nota NVARCHAR(MAX),
-    Fecha DATETIME,
-	Llaves TEXT,
-    Activo BIT,
-    IdUsuario INT NOT NULL,
-	IdOficina INT NOT NULL,
-    IdSecretaria INT NOT NULL,
-    IdDireccion INT NOT NULL,
-    CONSTRAINT FK_Surtido_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
-    CONSTRAINT FK_Surtido_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
-    CONSTRAINT FK_Surtido_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
-	CONSTRAINT FK_Surtido_Insumo FOREIGN KEY (IdInsumo) REFERENCES Insumo(Id)
-);
-CREATE TABLE Colecciones (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-	Nombre NVARCHAR(100),
-	Versionado NVARCHAR(100),
-	Coleccion NVARCHAR(100),
-	Activo BIT,
-    IdUsuario INT NOT NULL,
-	IdOficina INT NOT NULL,
-    IdSecretaria INT NOT NULL,
-    IdDireccion INT NOT NULL,
-    CONSTRAINT FK_Colecciones_Secretaria FOREIGN KEY (IdSecretaria) REFERENCES Secretaria(Id),
-    CONSTRAINT FK_Colecciones_Direccion FOREIGN KEY (IdDireccion) REFERENCES Direccion(Id),
-    CONSTRAINT FK_Colecciones_Oficina FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
-    CONSTRAINT FK_Colecciones_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
-);
---Actualizacion al 22-11-2023
-CREATE TABLE PresupuestoRequerimiento (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    Fecha DATE,
-    Llaves TEXT,
-    Nota TEXT,
-	Estado TEXT,
-	Historia TEXT, --Aqui se detalla la historia => Evento/Fecha/Usuario
-    IdRequerimiento INT,
-    IdProveedor INT,
-	IdUsuario INT NOT NULL,
-    CONSTRAINT FK_PresupuestoRequerimiento_Sector FOREIGN KEY (IdOficina) REFERENCES Oficina(Id),
-    CONSTRAINT FK_PresupuestoRequerimiento_Usuario FOREIGN KEY (IdUsuario) REFERENCES Usuario(Id)
-);
-CREATE TABLE DetallePresupuestoRequerimiento (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
-    IdPresupuestoRequerimiento INT,
-    IdInsumo INT,
-    Cantidad INT,
-    Precio DECIMAL(10, 2),
-    CONSTRAINT FK_DetallePresupuestoRequerimiento_PresupuestoRequerimiento FOREIGN KEY (IdRequerimiento) REFERENCES Requerimiento(Id),
-    CONSTRAINT FK_DetallePresupuestoRequerimiento_Insumo FOREIGN KEY (IdInsumo) REFERENCES Insumo(Id)
-);
+USE [master]
+GO
+/****** Object:  Database [MuniVA]    Script Date: 29/11/2023 13:28:37 ******/
+CREATE DATABASE [MuniVA]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'MuniVA', FILENAME = N'C:\Users\Usuario\MuniVA.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'MuniVA_log', FILENAME = N'C:\Users\Usuario\MuniVA_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT
+GO
+ALTER DATABASE [MuniVA] SET COMPATIBILITY_LEVEL = 150
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [MuniVA].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [MuniVA] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [MuniVA] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [MuniVA] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [MuniVA] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [MuniVA] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [MuniVA] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [MuniVA] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [MuniVA] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [MuniVA] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [MuniVA] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [MuniVA] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [MuniVA] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [MuniVA] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [MuniVA] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [MuniVA] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [MuniVA] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [MuniVA] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [MuniVA] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [MuniVA] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [MuniVA] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [MuniVA] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [MuniVA] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [MuniVA] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [MuniVA] SET  MULTI_USER 
+GO
+ALTER DATABASE [MuniVA] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [MuniVA] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [MuniVA] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [MuniVA] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [MuniVA] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [MuniVA] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+ALTER DATABASE [MuniVA] SET QUERY_STORE = OFF
+GO
+USE [MuniVA]
+GO
+/****** Object:  Table [dbo].[Colecciones]    Script Date: 29/11/2023 13:28:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Colecciones](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Nombre] [nvarchar](100) NULL,
+	[Versionado] [nvarchar](100) NULL,
+	[Coleccion] [nvarchar](100) NULL,
+	[Activo] [bit] NULL,
+	[IdUsuario] [int] NOT NULL,
+	[IdOficina] [int] NOT NULL,
+	[IdDireccion] [int] NOT NULL,
+	[IdSecretaria] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DetalleOrdenCompra]    Script Date: 29/11/2023 13:28:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DetalleOrdenCompra](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdOrdenCompra] [int] NULL,
+	[IdInsumo] [int] NULL,
+	[Cantidad] [int] NULL,
+	[Precio] [decimal](10, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DetalleOrdenPedido]    Script Date: 29/11/2023 13:28:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DetalleOrdenPedido](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdOrdenPedido] [int] NULL,
+	[IdInsumo] [int] NULL,
+	[Cantidad] [int] NULL,
+	[Precio] [decimal](10, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DetallePresupuestoOrdenCompra]    Script Date: 29/11/2023 13:28:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DetallePresupuestoOrdenCompra](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdPresupuestoOrdenCompra] [int] NULL,
+	[IdInsumo] [int] NULL,
+	[Cantidad] [int] NULL,
+	[Precio] [decimal](10, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DetalleRequerimiento]    Script Date: 29/11/2023 13:28:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DetalleRequerimiento](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdRequerimiento] [int] NULL,
+	[IdInsumo] [int] NULL,
+	[Cantidad] [int] NULL,
+	[Precio] [decimal](10, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Insumos]    Script Date: 29/11/2023 13:28:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Insumos](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Nombre] [nvarchar](255) NULL,
+	[Cuenta] [nvarchar](255) NULL,
+	[Activo] [bit] NULL,
+	[Nota] [nvarchar](max) NULL,
+	[Fecha] [datetime] NULL,
+	[Precio] [decimal](18, 0) NULL,
+	[IdUsuario] [int] NOT NULL,
+	[IdOficina] [int] NOT NULL,
+	[IdDireccion] [int] NOT NULL,
+	[IdSecretaria] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[OrdenCompra]    Script Date: 29/11/2023 13:28:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OrdenCompra](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Fecha] [date] NULL,
+	[Llaves] [text] NULL,
+	[Nota] [text] NULL,
+	[IdOrdenPedido] [int] NULL,
+	[Historia] [text] NULL,
+	[IdUsuario] [int] NOT NULL,
+	[IdOficina] [int] NOT NULL,
+	[IdDireccion] [int] NOT NULL,
+	[IdSecretaria] [int] NOT NULL,
+	[IdProveedor] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[OrdenPedido]    Script Date: 29/11/2023 13:28:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OrdenPedido](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Fecha] [date] NULL,
+	[Llaves] [text] NULL,
+	[Nota] [text] NULL,
+	[IdRequerimiento] [int] NULL,
+	[FormaLegal] [nvarchar](255) NULL,
+	[Historia] [text] NULL,
+	[IdUsuario] [int] NOT NULL,
+	[IdOficina] [int] NOT NULL,
+	[IdDireccion] [int] NOT NULL,
+	[IdSecretaria] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[PresupuestoOrdenCompra]    Script Date: 29/11/2023 13:28:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[PresupuestoOrdenCompra](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Fecha] [date] NULL,
+	[Llaves] [text] NULL,
+	[Nota] [text] NULL,
+	[IdOrdenCompra] [int] NULL,
+	[Historia] [text] NULL,
+	[IdUsuario] [int] NOT NULL,
+	[IdOficina] [int] NOT NULL,
+	[IdDireccion] [int] NOT NULL,
+	[IdSecretaria] [int] NOT NULL,
+	[IdProveedor] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Proveedor]    Script Date: 29/11/2023 13:28:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Proveedor](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Nombre] [nvarchar](255) NULL,
+	[NombreContacto] [nvarchar](255) NULL,
+	[Direccion] [nvarchar](255) NULL,
+	[Ciudad] [nvarchar](255) NULL,
+	[ProvinciaEstado] [nvarchar](255) NULL,
+	[CodigoPostal] [nvarchar](20) NULL,
+	[Pais] [nvarchar](100) NULL,
+	[Telefono] [nvarchar](20) NULL,
+	[CorreoElectronico] [nvarchar](255) NULL,
+	[SitioWeb] [nvarchar](255) NULL,
+	[TipoProveedor] [nvarchar](100) NULL,
+	[CategoriaProductosServicios] [nvarchar](255) NULL,
+	[Notas] [nvarchar](max) NULL,
+	[Fecha] [datetime] NULL,
+	[Llaves] [text] NULL,
+	[Activo] [bit] NULL,
+	[IdUsuario] [int] NOT NULL,
+	[IdOficina] [int] NOT NULL,
+	[IdDireccion] [int] NOT NULL,
+	[IdSecretaria] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Requerimiento]    Script Date: 29/11/2023 13:28:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Requerimiento](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Fecha] [date] NULL,
+	[Llaves] [text] NULL,
+	[Nota] [text] NULL,
+	[Estado] [text] NULL,
+	[Historia] [text] NULL,
+	[IdUsuario] [int] NOT NULL,
+	[IdOficina] [int] NOT NULL,
+	[IdDireccion] [int] NOT NULL,
+	[IdSecretaria] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Surtido]    Script Date: 29/11/2023 13:28:37 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Surtido](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[IdInsumo] [int] NULL,
+	[Entidad] [nvarchar](100) NULL,
+	[Nota] [nvarchar](max) NULL,
+	[Fecha] [datetime] NULL,
+	[Llaves] [text] NULL,
+	[Activo] [bit] NULL,
+	[IdUsuario] [int] NOT NULL,
+	[IdOficina] [int] NOT NULL,
+	[IdDireccion] [int] NOT NULL,
+	[IdSecretaria] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+USE [master]
+GO
+ALTER DATABASE [MuniVA] SET  READ_WRITE 

@@ -26,6 +26,8 @@ namespace WebApiCompras
             services.AddScoped<IOrdenpedidoService, OrdenpedidoService>();
             services.AddScoped<IOrdencompraService, OrdencompraService>();
             services.AddScoped<IDetalleRequerimientoService, DetalleRequerimientoService>();
+            services.AddScoped<IPresupuestoOrdenCompraService, PresupuestoOrdenCompraService>();
+            services.AddScoped<IDetallepresupuestoordencompraService, DetallepresupuestoordencompraService>();
             services.AddCors();
 
         }

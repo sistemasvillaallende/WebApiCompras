@@ -10,6 +10,7 @@ namespace WebApiCompras.Entities
 {
     public class Ordenpedido : DALBase
     {
+        #region propiedades
         public int Id { get; set; }
         public DateTime Fecha { get; set; }
         public string Llaves { get; set; }
@@ -21,6 +22,7 @@ namespace WebApiCompras.Entities
         public int IdOficina { get; set; }
         public int IdDireccion { get; set; }
         public int IdSecretaria { get; set; }
+        #endregion
 
         public Ordenpedido()
         {
@@ -37,6 +39,7 @@ namespace WebApiCompras.Entities
             IdSecretaria = 0;
         }
 
+        #region metodos
         private static List<Ordenpedido> mapeo(SqlDataReader dr)
         {
             List<Ordenpedido> lst = new List<Ordenpedido>();
@@ -378,7 +381,7 @@ namespace WebApiCompras.Entities
                 throw ex;
             }
         }
-
+        #endregion
     }
 }
 
