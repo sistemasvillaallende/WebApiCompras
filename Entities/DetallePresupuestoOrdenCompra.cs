@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -5,48 +6,46 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApiCompras.Entities;
 
 namespace WebApiCompras.Entities
 {
-    public class DetalleOrdenCompra : DALBase
+    public class DetallePresupuestoOrdenCompra : DALBase
     {
-        #region propiedades
         public int Id { get; set; }
-        public int IdOrdenCompra { get; set; }
+        public int IdPresupuestoOrdenCompra { get; set; }
         public int IdInsumo { get; set; }
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
         public string NombreInsumo { get; set; }
-        #endregion
 
-        #region metodos
-        public DetalleOrdenCompra()
+        public DetallePresupuestoOrdenCompra()
         {
             Id = 0;
-            IdOrdenCompra = 0;
+            IdPresupuestoOrdenCompra = 0;
             IdInsumo = 0;
             Cantidad = 0;
             Precio = 0;
             NombreInsumo = string.Empty;
         }
 
-        private static List<DetalleOrdenCompra> mapeo(SqlDataReader dr)
+        private static List<DetallePresupuestoOrdenCompra> mapeo(SqlDataReader dr)
         {
-            List<DetalleOrdenCompra> lst = new List<DetalleOrdenCompra>();
-            DetalleOrdenCompra obj;
+            List<DetallePresupuestoOrdenCompra> lst = new List<DetallePresupuestoOrdenCompra>();
+            DetallePresupuestoOrdenCompra obj;
             if (dr.HasRows)
             {
                 int Id = dr.GetOrdinal("Id");
-                int IdOrdenCompra = dr.GetOrdinal("IdOrdenCompra");
+                int IdPresupuestoPedido = dr.GetOrdinal("IdPresupuestoOrdenCompra");
                 int IdInsumo = dr.GetOrdinal("IdInsumo");
                 int Cantidad = dr.GetOrdinal("Cantidad");
                 int Precio = dr.GetOrdinal("Precio");
                 int NombreInsumo = dr.GetOrdinal("NombreInsumo");
                 while (dr.Read())
                 {
-                    obj = new DetalleOrdenCompra();
+                    obj = new DetallePresupuestoOrdenCompra();
                     if (!dr.IsDBNull(Id)) { obj.Id = dr.GetInt32(Id); }
-                    if (!dr.IsDBNull(IdOrdenCompra)) { obj.IdOrdenCompra = dr.GetInt32(IdOrdenCompra); }
+                    if (!dr.IsDBNull(IdPresupuestoPedido)) { obj.IdPresupuestoOrdenCompra = dr.GetInt32(IdPresupuestoPedido); }
                     if (!dr.IsDBNull(IdInsumo)) { obj.IdInsumo = dr.GetInt32(IdInsumo); }
                     if (!dr.IsDBNull(Cantidad)) { obj.Cantidad = dr.GetInt32(Cantidad); }
                     if (!dr.IsDBNull(Precio)) { obj.Precio = dr.GetDecimal(Precio); }
@@ -57,16 +56,16 @@ namespace WebApiCompras.Entities
             return lst;
         }
 
-        public static List<DetalleOrdenCompra> read()
+        public static List<DetallePresupuestoOrdenCompra> read()
         {
             try
             {
-                List<DetalleOrdenCompra> lst = new List<DetalleOrdenCompra>();
+                List<DetallePresupuestoOrdenCompra> lst = new List<DetallePresupuestoOrdenCompra>();
                 using (SqlConnection con = GetConnection())
                 {
                     SqlCommand cmd = con.CreateCommand();
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT DetalleOrdenCompra.*, Insumos.Nombre NombreInsumo FROM DetalleOrdenCompra INNER JOIN Insumos ON Insumos.Id = DetalleOrdenCompra.IdInsumo";
+                    cmd.CommandText = "SELECT DetallePresupuestoOrdenCompra.*, Insumos.Nombre NombreInsumo FROM DetallePresupuestoOrdenCompra INNER JOIN Insumos ON Insumos.Id = DetallePresupuestoOrdenCompra.IdInsumo";
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
@@ -79,14 +78,14 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static DetalleOrdenCompra getByPk(int Id)
+        public static DetallePresupuestoOrdenCompra getByPk(int Id)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT DetalleOrdenCompra.*, Insumos.Nombre NombreInsumo FROM DetalleOrdenCompra INNER JOIN Insumos ON Insumos.Id = DetalleOrdenCompra.IdInsumo WHERE");
+                sql.AppendLine("SELECT DetallePresupuestoOrdenCompra.*, Insumos.Nombre NombreInsumo FROM DetallePresupuestoOrdenCompra INNER JOIN Insumos ON Insumos.Id = DetallePresupuestoOrdenCompra.IdInsumo WHERE");
                 sql.AppendLine("Id = @Id");
-                DetalleOrdenCompra obj = null;
+                DetallePresupuestoOrdenCompra obj = null;
                 using (SqlConnection con = GetConnection())
                 {
                     SqlCommand cmd = con.CreateCommand();
@@ -95,7 +94,7 @@ namespace WebApiCompras.Entities
                     cmd.Parameters.AddWithValue("@Id", Id);
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
-                    List<DetalleOrdenCompra> lst = mapeo(dr);
+                    List<DetallePresupuestoOrdenCompra> lst = mapeo(dr);
                     if (lst.Count != 0)
                         obj = lst[0];
                 }
@@ -107,46 +106,20 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static List<DetalleOrdenCompra> getByOrdenCompra(int idOrdenCompra)
+        public static int insert(DetallePresupuestoOrdenCompra obj)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT DetalleOrdenCompra.*, Insumos.Nombre NombreInsumo FROM DetalleOrdenCompra INNER JOIN Insumos ON Insumos.Id = DetalleOrdenCompra.IdInsumo WHERE");
-                sql.AppendLine("IdOrdenCompra = @IdOrdenCompra");
-                List<DetalleOrdenCompra> lst = new List<DetalleOrdenCompra>();
-                using (SqlConnection con = GetConnection())
-                {
-                    SqlCommand cmd = con.CreateCommand();
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@IdOrdenCompra", idOrdenCompra);
-                    cmd.Connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    lst = mapeo(dr);
-                    return lst;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static int insert(DetalleOrdenCompra obj)
-        {
-            try
-            {
-                StringBuilder sql = new StringBuilder();
-                sql.AppendLine("INSERT INTO DetalleOrdenCompra(");
-                sql.AppendLine("IdOrdenCompra");
+                sql.AppendLine("INSERT INTO DetallePresupuestoOrdenCompra(");
+                sql.AppendLine("IdPresupuestoOrdenCompra");
                 sql.AppendLine(", IdInsumo");
                 sql.AppendLine(", Cantidad");
                 sql.AppendLine(", Precio");
                 sql.AppendLine(")");
                 sql.AppendLine("VALUES");
                 sql.AppendLine("(");
-                sql.AppendLine("@IdOrdenCompra");
+                sql.AppendLine("@IdPresupuestoOrdenCompra");
                 sql.AppendLine(", @IdInsumo");
                 sql.AppendLine(", @Cantidad");
                 sql.AppendLine(", @Precio");
@@ -157,7 +130,7 @@ namespace WebApiCompras.Entities
                     SqlCommand cmd = con.CreateCommand();
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@IdOrdenCompra", obj.IdOrdenCompra);
+                    cmd.Parameters.AddWithValue("@IdPresupuestoOrdenCompra", obj.IdPresupuestoOrdenCompra);
                     cmd.Parameters.AddWithValue("@IdInsumo", obj.IdInsumo);
                     cmd.Parameters.AddWithValue("@Cantidad", obj.Cantidad);
                     cmd.Parameters.AddWithValue("@Precio", obj.Precio);
@@ -171,13 +144,30 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static void update(DetalleOrdenCompra obj)
+        public static void insertList(List<DetallePresupuestoOrdenCompra> list, int IdPresupuestoOrdenCompra)
+        {
+            try
+            {
+                foreach (var item in list)
+                {
+                    item.IdPresupuestoOrdenCompra = IdPresupuestoOrdenCompra;
+                    insert(item);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public static void update(DetallePresupuestoOrdenCompra obj)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("UPDATE  DetalleOrdenCompra SET");
-                sql.AppendLine("IdOrdenCompra=@IdOrdenCompra");
+                sql.AppendLine("UPDATE  DetallePresupuestoOrdenCompra SET");
+                sql.AppendLine("IdPresupuestoOrdenCompra=@IdPresupuestoOrdenCompra");
                 sql.AppendLine(", IdInsumo=@IdInsumo");
                 sql.AppendLine(", Cantidad=@Cantidad");
                 sql.AppendLine(", Precio=@Precio");
@@ -188,7 +178,7 @@ namespace WebApiCompras.Entities
                     SqlCommand cmd = con.CreateCommand();
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = sql.ToString();
-                    cmd.Parameters.AddWithValue("@IdOrdenCompra", obj.IdOrdenCompra);
+                    cmd.Parameters.AddWithValue("@IdPresupuestoOrdenCompra", obj.IdPresupuestoOrdenCompra);
                     cmd.Parameters.AddWithValue("@IdInsumo", obj.IdInsumo);
                     cmd.Parameters.AddWithValue("@Cantidad", obj.Cantidad);
                     cmd.Parameters.AddWithValue("@Precio", obj.Precio);
@@ -202,12 +192,38 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static void delete(DetalleOrdenCompra obj)
+        public static void updatePrecio(DetallePresupuestoOrdenCompra obj)
         {
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("DELETE  DetalleOrdenCompra ");
+                sql.AppendLine("UPDATE  DetallePresupuestoOrdenCompra SET");
+                sql.AppendLine(", Precio=@Precio");
+                sql.AppendLine("WHERE");
+                sql.AppendLine("Id=@Id");
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@Id", obj.Id);
+                    cmd.Parameters.AddWithValue("@Precio", obj.Precio);
+                    cmd.Connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static void delete(DetallePresupuestoOrdenCompra obj)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("DELETE  DetallePresupuestoOrdenCompra ");
                 sql.AppendLine("WHERE");
                 sql.AppendLine("Id=@Id");
                 using (SqlConnection con = GetConnection())
@@ -225,7 +241,33 @@ namespace WebApiCompras.Entities
                 throw ex;
             }
         }
-        #endregion
+
+        public static List<DetallePresupuestoOrdenCompra> getByIdPresupuestoOrdenCompra(int IdPresupuestoPedido)
+        {
+            try
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.AppendLine("SELECT DetallePresupuestoOrdenCompra.*, Insumos.Nombre NombreInsumo FROM DetallePresupuestoOrdenCompra INNER JOIN Insumos ON Insumos.Id = DetallePresupuestoOrdenCompra.IdInsumo WHERE");
+                sql.AppendLine("IdPresupuestoOrdenCompra = @IdPresupuestoOrdenCompra");
+                List<DetallePresupuestoOrdenCompra> lst = new List<DetallePresupuestoOrdenCompra>();
+                using (SqlConnection con = GetConnection())
+                {
+                    SqlCommand cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@IdPresupuestoOrdenCompra", IdPresupuestoPedido);
+                    cmd.Connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    lst = mapeo(dr);
+                    return lst;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }
 

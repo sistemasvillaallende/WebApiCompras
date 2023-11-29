@@ -1,0 +1,10 @@
+Desarrollar DetalleOrdenCompraPresupuesto:
+	3-Controller
+
+Base de datos:
+	1-Crear script tabla PresupuestoOrdenCompra
+	2-Crear script tabla DetallePresupuestoOrdenCompra
+
+Controlar a detalle:
+	1-PresupuestoOrdenCompra
+	2-DetallePresupuestoOrdenCompra

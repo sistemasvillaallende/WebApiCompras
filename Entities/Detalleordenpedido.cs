@@ -15,6 +15,7 @@ namespace WebApiCompras.Entities
         public int IdInsumo { get; set; }
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
+        public string NombreInsumo { get; set; }
 
         public DetalleOrdenpedido()
         {
@@ -23,6 +24,7 @@ namespace WebApiCompras.Entities
             IdInsumo = 0;
             Cantidad = 0;
             Precio = 0;
+            NombreInsumo = string.Empty;
         }
 
         private static List<DetalleOrdenpedido> mapeo(SqlDataReader dr)
@@ -36,6 +38,7 @@ namespace WebApiCompras.Entities
                 int IdInsumo = dr.GetOrdinal("IdInsumo");
                 int Cantidad = dr.GetOrdinal("Cantidad");
                 int Precio = dr.GetOrdinal("Precio");
+                int NombreInsumo = dr.GetOrdinal("NombreInsumo");
                 while (dr.Read())
                 {
                     obj = new DetalleOrdenpedido();
@@ -44,6 +47,7 @@ namespace WebApiCompras.Entities
                     if (!dr.IsDBNull(IdInsumo)) { obj.IdInsumo = dr.GetInt32(IdInsumo); }
                     if (!dr.IsDBNull(Cantidad)) { obj.Cantidad = dr.GetInt32(Cantidad); }
                     if (!dr.IsDBNull(Precio)) { obj.Precio = dr.GetDecimal(Precio); }
+                    if (!dr.IsDBNull(NombreInsumo)) { obj.NombreInsumo = dr.GetString(NombreInsumo); }
                     lst.Add(obj);
                 }
             }
@@ -59,7 +63,7 @@ namespace WebApiCompras.Entities
                 {
                     SqlCommand cmd = con.CreateCommand();
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT * FROM DetalleOrdenpedido";
+                    cmd.CommandText = "SELECT DetalleOrdenpedido.*, Insumos.Nombre NombreInsumo FROM DetalleOrdenpedido INNER JOIN Insumos ON Insumos.Id = DetalleOrdenpedido.IdInsumo";
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
@@ -77,7 +81,7 @@ namespace WebApiCompras.Entities
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT * FROM DetalleOrdenpedido WHERE");
+                sql.AppendLine("SELECT DetalleOrdenpedido.*, Insumos.Nombre NombreInsumo FROM DetalleOrdenpedido INNER JOIN Insumos ON Insumos.Id = DetalleOrdenpedido.IdInsumo WHERE");
                 sql.AppendLine("Id = @Id");
                 DetalleOrdenpedido obj = null;
                 using (SqlConnection con = GetConnection())
@@ -106,7 +110,7 @@ namespace WebApiCompras.Entities
             {
                 List<DetalleOrdenpedido> lst = new List<DetalleOrdenpedido>();
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT * FROM DetalleOrdenpedido WHERE");
+                sql.AppendLine("SELECT DetalleOrdenpedido.*, Insumos.Nombre NombreInsumo FROM DetalleOrdenpedido INNER JOIN Insumos ON Insumos.Id = DetalleOrdenpedido.IdInsumo WHERE");
                 sql.AppendLine("IdOrdenPedido = @IdOrdenPedido");
                 using (SqlConnection con = GetConnection())
                 {

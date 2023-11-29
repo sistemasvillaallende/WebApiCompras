@@ -6,16 +6,16 @@ namespace WebApiCompras.Controllers
 {
     [ApiController]
     [Route ("[controller]/[action]")]
-    public class OrdencompraController : Controller
+    public class PresupuestoordencompraController : Controller
     {
-        private IPresupuestoordencompraService _OrdencompraService;
-        public OrdencompraController (IPresupuestoordencompraService OrdencompraService) {
-            _OrdencompraService = OrdencompraService;
+        private IPresupuestoOrdenCompraService _PresupuestoordencompraService;
+        public PresupuestoordencompraController (IPresupuestoOrdenCompraService PresupuestoordencompraService) {
+            _PresupuestoordencompraService = PresupuestoordencompraService;
         }
         [HttpGet]
         public IActionResult getByPk(int Id)
         {
-            var Ordencompra = _OrdencompraService.getByPk(Id);
+            var Ordencompra = _PresupuestoordencompraService.getByPk(Id);
             if (Ordencompra == null)
             {
                 return BadRequest(new { message = "Error al obtener los datos" });
@@ -23,25 +23,25 @@ namespace WebApiCompras.Controllers
             return Ok(Ordencompra);
         }
         [HttpPost]
-        public IActionResult NuevoOrdenCompra(OrdenCompra obj)
+        public IActionResult NuevoPresupuestoOrdenCompra(PresupuestoOrdenCompra obj)
         {
-            var Id = _OrdencompraService.insert(obj);
+            var Id = _PresupuestoordencompraService.insert(obj);
 
             if (Id.ToString() == null)
             {
-                return Ok(new { message = "Error no se pudo dar de Alta un OrdenCompra." });
+                return Ok(new { message = "Error no se pudo dar de Alta." });
             }
             return Ok(Id);
         }
         [HttpPost]
-        public IActionResult UpdateOrdenCompra(OrdenCompra obj)
+        public IActionResult UpdatePresupuestoOrdenCompra(PresupuestoOrdenCompra obj)
         {
             try
             {
                 if (obj != null)
                 {
-                    _OrdencompraService.update(obj);
-                    return Ok(new { message = "OrdenCompra actualizado exitosamente" });
+                    _PresupuestoordencompraService.update(obj);
+                    return Ok(new { message = "Actualizado exitosamente" });
                 }
                 else
                 {
@@ -56,7 +56,7 @@ namespace WebApiCompras.Controllers
         [HttpGet]
         public IActionResult read()
         {
-            var Coleccion = _OrdencompraService.read();
+            var Coleccion = _PresupuestoordencompraService.read();
             if (Coleccion == null)
             {
                 return BadRequest(new { message = "Error al obtener los datos" });
@@ -66,7 +66,7 @@ namespace WebApiCompras.Controllers
         [HttpGet]
         public IActionResult getByUsuario(int idUsuario)
         {
-            var Coleccion = _OrdencompraService.getByUsuario(idUsuario);
+            var Coleccion = _PresupuestoordencompraService.getByUsuario(idUsuario);
             if (Coleccion == null)
             {
                 return BadRequest(new { message = "Error al obtener los datos" });
@@ -76,7 +76,7 @@ namespace WebApiCompras.Controllers
         [HttpGet]
         public IActionResult getBySecretaria(int idSecretaria)
         {
-            var Coleccion = _OrdencompraService.getBySecretaria(idSecretaria);
+            var Coleccion = _PresupuestoordencompraService.getBySecretaria(idSecretaria);
             if (Coleccion == null)
             {
                 return BadRequest(new { message = "Error al obtener los datos" });
@@ -86,7 +86,7 @@ namespace WebApiCompras.Controllers
         [HttpGet]
         public IActionResult getByOficina(int idOficina)
         {
-            var Coleccion = _OrdencompraService.getByOficina(idOficina);
+            var Coleccion = _PresupuestoordencompraService.getByOficina(idOficina);
             if (Coleccion == null)
             {
                 return BadRequest(new { message = "Error al obtener los datos" });
@@ -96,7 +96,7 @@ namespace WebApiCompras.Controllers
         [HttpGet]
         public IActionResult getByDireccion(int idDireccion)
         {
-            var Coleccion = _OrdencompraService.getByDireccion(idDireccion);
+            var Coleccion = _PresupuestoordencompraService.getByDireccion(idDireccion);
             if (Coleccion == null)
             {
                 return BadRequest(new { message = "Error al obtener los datos" });
@@ -104,10 +104,10 @@ namespace WebApiCompras.Controllers
             return Ok(Coleccion);
         }
         [HttpGet]
-        public IActionResult delete(OrdenCompra obj)
+        public IActionResult delete(PresupuestoOrdenCompra obj)
         {
-            _OrdencompraService.delete(obj);
-            var detalleOrdenCompra = _OrdencompraService.getByPk(obj.Id);
+            _PresupuestoordencompraService.delete(obj);
+            var detalleOrdenCompra = _PresupuestoordencompraService.getByPk(obj.Id);
             if (detalleOrdenCompra != null)
             {
                 return BadRequest(new { message = "Error al obtener los datos" });
@@ -115,9 +115,9 @@ namespace WebApiCompras.Controllers
             return Ok(detalleOrdenCompra);
         }
         [HttpGet]
-        public IActionResult getByOrdenPedido(int idOrdenPedido)
+        public IActionResult getByOrdenCompra(int idOrdenPedido)
         {
-            var Coleccion = _OrdencompraService.getByOrdenPedido(idOrdenPedido);
+            var Coleccion = _PresupuestoordencompraService.getByOrdenCompra(idOrdenPedido);
             if (Coleccion == null)
             {
                 return BadRequest(new { message = "Error al obtener los datos" });
