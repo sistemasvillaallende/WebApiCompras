@@ -44,8 +44,9 @@ namespace WebApiCompras.Services
                 using (TransactionScope scope = new TransactionScope())
                 {
                     Requerimiento.insert(obj);
+                    DetalleRequerimiento.insertList(obj.Items, obj.Id);
                     scope.Complete();
-                }
+            }
                 return obj.Id;
             }
             catch (Exception ex)

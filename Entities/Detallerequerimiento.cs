@@ -87,7 +87,7 @@ namespace WebApiCompras.Entities
                 sql.AppendLine("SELECT DetalleRequerimiento.*, Insumos.Nombre NombreInsumo " +
                     "FROM DetalleRequerimiento " +
                     "INNER JOIN Insumos ON Insumos.Id = DetalleRequerimiento.IdInsumo WHERE ");
-                sql.AppendLine("Id = @Id");
+                sql.AppendLine("DetalleRequerimiento.Id = @Id");
                 DetalleRequerimiento obj = null;
                 using (SqlConnection con = GetConnection())
                 {
@@ -201,7 +201,7 @@ namespace WebApiCompras.Entities
             {
                 StringBuilder sql = new StringBuilder();
                 sql.AppendLine("UPDATE  DetalleRequerimiento SET");
-                sql.AppendLine(", Precio=@Precio");
+                sql.AppendLine(" Precio=@Precio");
                 sql.AppendLine("WHERE");
                 sql.AppendLine("Id=@Id");
                 using (SqlConnection con = GetConnection())

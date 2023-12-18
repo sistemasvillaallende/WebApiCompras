@@ -24,7 +24,7 @@ namespace WebApiCompras.Controllers
         return Ok(Insumos);
         }
         [HttpPost]
-        public IActionResult NuevaColeccion(Insumos obj)
+        public IActionResult NuevaInsumo(Insumos obj)
         {
             var Id = _InsumosService.insert(obj);
 

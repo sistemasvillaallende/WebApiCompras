@@ -153,7 +153,6 @@ namespace WebApiCompras.Entities
                 sql.AppendLine(", Coleccion");
                 sql.AppendLine(", Activo");
                 sql.AppendLine(", IdUsuario");
-                sql.AppendLine(", IdSEctor");
                 sql.AppendLine(", IdOficina");
                 sql.AppendLine(", IdDireccion");
                 sql.AppendLine(", IdSecretaria");
@@ -214,6 +213,7 @@ namespace WebApiCompras.Entities
                     SqlCommand cmd = con.CreateCommand();
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = sql.ToString();
+                    cmd.Parameters.AddWithValue("@Id",obj.Id);
                     cmd.Parameters.AddWithValue("@Nombre", obj.Nombre);
                     cmd.Parameters.AddWithValue("@Versionado", obj.Versionado);
                     cmd.Parameters.AddWithValue("@Coleccion", obj.Coleccion);

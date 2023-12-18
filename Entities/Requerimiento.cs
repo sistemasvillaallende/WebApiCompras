@@ -90,7 +90,17 @@ namespace WebApiCompras.Entities
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
+                    List<DetalleRequerimiento> lstItem;
+                    foreach (var item in lst)
+                    {
+                        lstItem = new List<DetalleRequerimiento>();
+                        if (lstItem.Count > 0)
+                        {
+                            item.Items = DetalleRequerimiento.getByIdRequerimiento(item.Id);
+                        }
+                    }
                     return lst;
+
                 }
             }
             catch (Exception ex)
@@ -98,7 +108,7 @@ namespace WebApiCompras.Entities
                 throw ex;
             }
         }
-        
+
         public static List<Requerimiento> listaGrillas(string estado)
         {
             //Funcion en desarrollo
@@ -198,9 +208,9 @@ namespace WebApiCompras.Entities
                     cmd.Connection.Open();
 
                     obj.Id = Convert.ToInt32(cmd.ExecuteScalar());
-                    
-                    DetalleRequerimiento.insertList(obj.Items, obj.Id);
-                    
+
+                    //DetalleRequerimiento.insertList(obj.Items, obj.Id);
+
                     return obj.Id;
                 }
             }
@@ -251,7 +261,7 @@ namespace WebApiCompras.Entities
             }
         }
 
-        public static void updatePrecios(List<DetalleRequerimiento> lista) 
+        public static void updatePrecios(List<DetalleRequerimiento> lista)
         {
             foreach (var item in lista)
             {
@@ -300,6 +310,15 @@ namespace WebApiCompras.Entities
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
+                    List<DetalleRequerimiento> lstItem;
+                    foreach (var item in lst)
+                    {
+                        lstItem = DetalleRequerimiento.getByIdRequerimiento(item.Id);
+                        if (lstItem.Count > 0)
+                        {
+                            item.Items = lstItem;
+                        }
+                    }
                     return lst;
                 }
             }
@@ -326,6 +345,15 @@ namespace WebApiCompras.Entities
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
+                    List<DetalleRequerimiento> lstItem;
+                    foreach (var item in lst)
+                    {
+                        lstItem = new List<DetalleRequerimiento>();
+                        if (lstItem.Count > 0)
+                        {
+                            item.Items = DetalleRequerimiento.getByIdRequerimiento(item.Id);
+                        }
+                    }
                     return lst;
                 }
             }
@@ -352,6 +380,15 @@ namespace WebApiCompras.Entities
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
+                    List<DetalleRequerimiento> lstItem;
+                    foreach (var item in lst)
+                    {
+                        lstItem = new List<DetalleRequerimiento>();
+                        if (lstItem.Count > 0)
+                        {
+                            item.Items = DetalleRequerimiento.getByIdRequerimiento(item.Id);
+                        }
+                    }
                     return lst;
                 }
             }
@@ -378,6 +415,15 @@ namespace WebApiCompras.Entities
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
+                    List<DetalleRequerimiento> lstItem;
+                    foreach (var item in lst)
+                    {
+                        lstItem = new List<DetalleRequerimiento>();
+                        if (lstItem.Count > 0)
+                        {
+                            item.Items = DetalleRequerimiento.getByIdRequerimiento(item.Id);
+                        }
+                    }
                     return lst;
                 }
             }

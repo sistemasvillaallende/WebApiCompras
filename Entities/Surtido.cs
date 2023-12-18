@@ -94,7 +94,7 @@ namespace WebApiCompras.Entities
                 {
                     SqlCommand cmd = con.CreateCommand();
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT *, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo";
+                    cmd.CommandText = "SELECT Surtido.*, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo";
                     cmd.Connection.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
                     lst = mapeo(dr);
@@ -112,8 +112,8 @@ namespace WebApiCompras.Entities
             try
             {
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
-                sql.AppendLine("Id = @Id");
+                sql.AppendLine("SELECT Surtido.*, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
+                sql.AppendLine("Surtido.Id = @Id");
                 Surtido obj = null;
                 using (SqlConnection con = GetConnection())
                 {
@@ -141,8 +141,8 @@ namespace WebApiCompras.Entities
             {
                 List<Surtido> lst = new List<Surtido>();
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
-                sql.AppendLine("IdUsuario = @IdUsuario");
+                sql.AppendLine("SELECT Surtido.*, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
+                sql.AppendLine("Surtido.IdUsuario = @IdUsuario");
                 using (SqlConnection con = GetConnection())
                 {
                     SqlCommand cmd = con.CreateCommand();
@@ -167,8 +167,8 @@ namespace WebApiCompras.Entities
             {
                 List<Surtido> lst = new List<Surtido>();
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
-                sql.AppendLine("IdOficina = @IdOficina");
+                sql.AppendLine("SELECT Surtido.*, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
+                sql.AppendLine("Surtido.IdOficina = @IdOficina");
                 using (SqlConnection con = GetConnection())
                 {
                     SqlCommand cmd = con.CreateCommand();
@@ -193,8 +193,8 @@ namespace WebApiCompras.Entities
             {
                 List<Surtido> lst = new List<Surtido>();
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
-                sql.AppendLine("IdDireccion = @IdDireccion");
+                sql.AppendLine("SELECT Surtido.*, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
+                sql.AppendLine("Surtido.IdDireccion = @IdDireccion");
                 using (SqlConnection con = GetConnection())
                 {
                     SqlCommand cmd = con.CreateCommand();
@@ -219,8 +219,8 @@ namespace WebApiCompras.Entities
             {
                 List<Surtido> lst = new List<Surtido>();
                 StringBuilder sql = new StringBuilder();
-                sql.AppendLine("SELECT *, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
-                sql.AppendLine("IdSecretaria = @IdSecretaria");
+                sql.AppendLine("SELECT Surtido.*, Insumos.Nombre NombreInsumo, Insumos.Precio FROM Surtido inner join Insumos on Insumos.Id = Surtido.IdInsumo WHERE");
+                sql.AppendLine("Surtido.IdSecretaria = @IdSecretaria");
                 using (SqlConnection con = GetConnection())
                 {
                     SqlCommand cmd = con.CreateCommand();
@@ -252,7 +252,9 @@ namespace WebApiCompras.Entities
                 sql.AppendLine(", Llaves");
                 sql.AppendLine(", Activo");
                 sql.AppendLine(", IdUsuario");
-                sql.AppendLine(", IdSector");
+                sql.AppendLine(", IdOficina");
+                sql.AppendLine(", IdDireccion");
+                sql.AppendLine(", IdSecretaria");
                 sql.AppendLine(")");
                 sql.AppendLine("VALUES");
                 sql.AppendLine("(");
@@ -263,9 +265,9 @@ namespace WebApiCompras.Entities
                 sql.AppendLine(", @Llaves");
                 sql.AppendLine(", @Activo");
                 sql.AppendLine(", @IdUsuario");
-                sql.AppendLine(", IdOficina");
-                sql.AppendLine(", IdDireccion");
-                sql.AppendLine(", IdSecretaria");
+                sql.AppendLine(", @IdOficina");
+                sql.AppendLine(", @IdDireccion");
+                sql.AppendLine(", @IdSecretaria");
                 sql.AppendLine(")");
                 sql.AppendLine("SELECT SCOPE_IDENTITY()");
                 using (SqlConnection con = GetConnection())
@@ -280,9 +282,9 @@ namespace WebApiCompras.Entities
                     cmd.Parameters.AddWithValue("@Llaves", obj.Llaves);
                     cmd.Parameters.AddWithValue("@Activo", obj.Activo);
                     cmd.Parameters.AddWithValue("@IdUsuario", obj.IdUsuario);
-                    sql.AppendLine(", @IdOficina");
-                    sql.AppendLine(", @IdDireccion");
-                    sql.AppendLine(", @IdSecretaria");
+                    cmd.Parameters.AddWithValue("@IdOficina", obj.IdOficina);
+                    cmd.Parameters.AddWithValue("@IdDireccion", obj.IdDireccion);
+                    cmd.Parameters.AddWithValue("@IdSecretaria", obj.IdSecretaria);
                     cmd.Connection.Open();
                     return Convert.ToInt32(cmd.ExecuteScalar());
                 }

@@ -87,7 +87,7 @@ namespace WebApiCompras.Controllers
             return Ok(Requerimiento);
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult updatePrecios(List<DetalleRequerimiento> lista)
         {
             try
